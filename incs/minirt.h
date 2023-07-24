@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/24 14:45:36 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:49:26 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,76 @@
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
 # define MENU_WIDTH 320
+
+typedef struct s_mlx
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	void	*img_ptr;
+	char	*addr;
+	int		bpp;
+	int		len;
+	int		end;
+}	t_mlx;
+
+typedef struct s_color
+{
+	int			r;
+	int			g;
+	int			b;
+	int			hex;
+}	t_color;
+
+typedef struct s_coords
+{
+	double		x;
+	double		y;
+	double		z;
+}	t_coords;
+
+typedef enum e_type
+{
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_type;
+
+typedef struct s_ambient
+{
+	float		range;
+	t_color		color;
+}	t_ambient;
+
+typedef struct s_cam
+{
+	t_coords	coords;
+	t_coords	vector;
+	int			fov;
+}	t_cam;
+
+typedef struct s_light
+{
+	t_coords	coords;
+	float		range;
+}	t_light;
+
+typedef struct s_object
+{
+	t_type		type;
+	t_coords	coords;
+	t_coords	vector;
+	t_color		color;
+	double		diameter;
+	double		height;
+}	t_object;
+
+typedef struct s_data
+{
+	t_mlx		mlx;
+	t_ambient	ambient;
+	t_cam		cam;
+	t_light		light;
+	t_object	*objects;
+}	t_data;
 
 #endif
