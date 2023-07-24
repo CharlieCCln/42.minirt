@@ -6,7 +6,7 @@
 #    By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:33:09 by ccrottie          #+#    #+#              #
-#    Updated: 2023/07/24 15:19:24 by ccrottie         ###   ########.fr        #
+#    Updated: 2023/07/24 17:24:53 by ccrottie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 CC			=	cc
 CC_FLAGS	=	-Wextra -Werror -Wall -O3
 
-all: 			$(NAME)
+all: 			build_libft build_mlx $(NAME)
 
 $(OBJ): 		$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(LIBFT_A) $(LIBFT_DIR)libft.h $(MLX_A) $(MLX_DIR)mlx.h
 				mkdir -p $(@D)
@@ -44,14 +44,12 @@ $(OBJ): 		$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(HEADERS) $(LIBFT_A) $(LIBFT_DIR)libft.h
 $(NAME):		$(OBJ) $(MLX_A)
 				$(CC) $(CC_FLAGS) $(OBJ) $(LIBFT_A) $(MLX_A) -o $@
 
-$(LIBFT_A):		FORCE
+build_libft:
 				$(MAKE) -C $(LIBFT_DIR)
 
-$(MLX_A):		FORCE
+build_mlx:
 				$(MAKE) -C $(MLX_DIR)
 	
-FORCE:
-
 clean:
 				$(MAKE) -C $(LIBFT_INC) fclean
 				$(MAKE) -C $(MLX_INC) clean
