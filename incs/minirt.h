@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/24 17:49:26 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:19:23 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_mlx
 	void	*mlx_ptr;
 	void	*win_ptr;
 	void	*img_ptr;
+	char	*win_name;
 	char	*addr;
 	int		bpp;
 	int		len;
@@ -61,7 +62,7 @@ typedef enum e_type
 
 typedef struct s_ambient
 {
-	float		range;
+	float		intensity;
 	t_color		color;
 }	t_ambient;
 
@@ -75,7 +76,7 @@ typedef struct s_cam
 typedef struct s_light
 {
 	t_coords	coords;
-	float		range;
+	float		intensity;
 }	t_light;
 
 typedef struct s_object
@@ -96,5 +97,12 @@ typedef struct s_data
 	t_light		light;
 	t_object	*objects;
 }	t_data;
+
+// parsing/parsing_hub.c
+int		arg_check(char *arg);
+void	parsing_hub(t_data *data, char *filename);
+
+// memory/init.c
+void	bzero_everything(t_data *data);
 
 #endif

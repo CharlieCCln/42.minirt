@@ -1,24 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parsing_hub.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 14:47:03 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/25 15:09:20 by ccrottie         ###   ########.fr       */
+/*   Created: 2023/07/25 15:07:46 by ccrottie          #+#    #+#             */
+/*   Updated: 2023/07/25 15:20:30 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	main(int argc, char **argv)
+int	arg_check(char *arg)
 {
-	t_data	data;
+	int	i;
 
-	bzero_everything(&data);
-	if (argc != 2 || arg_check(argv[1]))
-		return (printf("Error\nPlease use \"./miniRT path/to/file.rt\"\n"), 1);
-	parsing_hub(&data, argv[1]);
+	i = 0;
+	while (arg[i])
+	{
+		if (!ft_isascii(arg[i]))
+			return (1);
+		i++;
+	}
+	if (i < 3 || ft_strcmp(&arg[i - 3], ".rt"))
+		return (1);
 	return (0);
+}
+
+void	parsing_hub(t_data *data, char *filename)
+{
+	(void)data;
+	(void)filename;
 }
