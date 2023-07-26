@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/25 15:19:23 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/07/26 14:27:32 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,15 @@ typedef struct s_data
 	t_object	*objects;
 }	t_data;
 
+// main.c
+void	print_error(char *msg);
+
 // parsing/parsing_hub.c
 int		arg_check(char *arg);
 void	parsing_hub(t_data *data, char *filename);
+
+// parsing/gnl_safe.c
+char	*gnl_safe(int fd);
 
 // memory/init.c
 void	bzero_everything(t_data *data);

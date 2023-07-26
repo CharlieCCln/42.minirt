@@ -6,7 +6,7 @@
 #    By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:33:09 by ccrottie          #+#    #+#              #
-#    Updated: 2023/07/25 15:19:44 by ccrottie         ###   ########.fr        #
+#    Updated: 2023/07/26 15:28:04 by ccrottie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,13 +29,14 @@ MLX_INC		=	minilibx-linux
 SRC_DIR		=	./srcs/
 SRC			=	main.c \
 				memory/init.c \
-				parsing/parsing_hub.c
+				parsing/parsing_hub.c \
+				parsing/gnl_safe.c
 
 OBJ_DIR		=	objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 CC			=	cc
-CC_FLAGS	=	-Wextra -Werror -Wall -fsanitize=address -g3 -O3
+CC_FLAGS	=	-Wextra -Werror -Wall -O3
 
 all: 			build_libft build_mlx $(NAME)
 
