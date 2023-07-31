@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 14:39:32 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/25 14:51:29 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:07:21 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ void	bzero_everything(t_data *data)
 	ft_bzero(&data->cam, sizeof(t_cam));
 	ft_bzero(&data->light.coords, sizeof(t_coords));
 	ft_bzero(&data->light, sizeof(t_light));
-	ft_bzero(&data->objects, sizeof(t_object));
+	data->objects = NULL;
+	data->fd = 0;
 }

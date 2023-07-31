@@ -1,34 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_filename.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 14:47:03 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/31 15:34:21 by ccrottie         ###   ########.fr       */
+/*   Created: 2023/07/31 14:14:48 by ccrottie          #+#    #+#             */
+/*   Updated: 2023/07/31 18:03:32 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	print_error(char *msg)
+void	parse_filename(t_data *data, char *filename)
 {
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(msg, 2);
-}
+	int	i;
 
-int	main(int argc, char **argv)
-{
-	t_data	data;
-
-	bzero_everything(&data);
-	if (argc != 2 || arg_check(argv[1]))
+	i = 0;
+	while (filename[i])
+		i++;
+	i--;
+	while (i > 0 && filename[i] != '/')
+		i--;
+	data->mlx.win_name = ft_strdup(&filename[i + 1]);
+	if (!data->mlx.win_name)
 	{
-		print_error("Please use \"./miniRT path/to/file.rt\"");
-		terminate(&data);
+		print_error("parse_filename fail");
+		terminate(data);
 	}
-	parsing_hub(&data, argv[1]);
-	terminate(&data);
-	return (0);
 }

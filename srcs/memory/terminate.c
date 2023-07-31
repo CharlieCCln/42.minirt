@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   terminate.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 14:47:03 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/31 15:34:21 by ccrottie         ###   ########.fr       */
+/*   Created: 2023/07/31 14:24:56 by ccrottie          #+#    #+#             */
+/*   Updated: 2023/07/31 17:07:46 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	print_error(char *msg)
+void	terminate(t_data *data)
 {
-	ft_putendl_fd("Error", 2);
-	ft_putendl_fd(msg, 2);
-}
-
-int	main(int argc, char **argv)
-{
-	t_data	data;
-
-	bzero_everything(&data);
-	if (argc != 2 || arg_check(argv[1]))
-	{
-		print_error("Please use \"./miniRT path/to/file.rt\"");
-		terminate(&data);
-	}
-	parsing_hub(&data, argv[1]);
-	terminate(&data);
-	return (0);
+	if (data->mlx.mlx_ptr)
+		mlx_destroy_display(data->mlx.mlx_ptr);
+	if (data->mlx.win_ptr)
+		mlx_destroy_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
+	if (data->mlx.img_ptr)
+		mlx_destroy_image(data->mlx.mlx_ptr, data->mlx.img_ptr);
+	if (data->mlx.win_name)
+		free(data->mlx.win_name);
+	if (data->objects)
+		free(data->objects);
+	close(data->fd);
+	exit(1);
 }

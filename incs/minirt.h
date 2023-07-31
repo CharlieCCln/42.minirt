@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/26 14:27:32 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/07/31 17:59:12 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,37 @@ typedef struct s_data
 	t_cam		cam;
 	t_light		light;
 	t_object	*objects;
+	int			fd;
 }	t_data;
 
 // main.c
 void	print_error(char *msg);
 
-// parsing/parsing_hub.c
+// ----- PARSING -----
+
+// parsing/arg_check.c
 int		arg_check(char *arg);
+
+// parsing/parsing_hub.c
 void	parsing_hub(t_data *data, char *filename);
+int		open_infile(t_data *data, char *filename);
 
 // parsing/gnl_safe.c
-char	*gnl_safe(int fd);
+char	*gnl_safe(t_data *data, int fd);
+
+// parsing/check_unique_element.c
+void	check_unique_element(t_data *data, char *filename, char *to_check);
+char	*remove_endl(char *line);
+
+// parsing/parse_filename.c
+void	parse_filename(t_data *data, char *filename);
+
+// ----- MEMORY -----
 
 // memory/init.c
 void	bzero_everything(t_data *data);
+
+// memory/terminate.c
+void	terminate(t_data *data);
 
 #endif
