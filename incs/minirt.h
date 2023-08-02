@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/31 17:59:12 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:14:14 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ typedef enum e_type
 
 typedef struct s_ambient
 {
-	float		intensity;
+	double		intensity;
 	t_color		color;
 }	t_ambient;
 
@@ -76,7 +76,7 @@ typedef struct s_cam
 typedef struct s_light
 {
 	t_coords	coords;
-	float		intensity;
+	double		intensity;
 }	t_light;
 
 typedef struct s_object
@@ -110,21 +110,25 @@ int		arg_check(char *arg);
 // parsing/parsing_hub.c
 void	parsing_hub(t_data *data, char *filename);
 int		open_infile(t_data *data, char *filename);
+char	*remove_endl(char *line);
+
+// parsing/check_elements.c
+void	check_elements(t_data *data, char *filename);
 
 // parsing/gnl_safe.c
 char	*gnl_safe(t_data *data, int fd);
 
-// parsing/check_unique_element.c
-void	check_unique_element(t_data *data, char *filename, char *to_check);
-char	*remove_endl(char *line);
-
 // parsing/parse_filename.c
 void	parse_filename(t_data *data, char *filename);
+
+// parsing/parse_ambient.c
+int		parse_ambient(t_data *data, char **content);
 
 // ----- MEMORY -----
 
 // memory/init.c
 void	bzero_everything(t_data *data);
+void	allocate_objects(t_data *data, int *counts);
 
 // memory/terminate.c
 void	terminate(t_data *data);

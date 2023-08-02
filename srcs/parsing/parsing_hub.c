@@ -6,11 +6,22 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:07:46 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/07/31 18:03:53 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:13:25 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+char	*remove_endl(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] && line[i] != '\n')
+		i++;
+	line[i] = 0;
+	return (line);
+}
 
 int	open_infile(t_data *data, char *filename)
 {
@@ -26,36 +37,27 @@ int	open_infile(t_data *data, char *filename)
 	return (fd);
 }
 
-// void	parse_line_content(t_data *data, char *line)
-// {
-// 	char	**split;
+int	parse_line_content(t_data *data, char **content)
+{
+	if (!*content)
+		return (0);
+	else if (!ft_strcmp(*content, "A"))
+		return (parse_ambient(data, content));
+/* 	else if (!ft_strcmp(*content, "C"))
+		return (parse_camera(data, content));
+	else if (!ft_strcmp(*content, "L"))
+		return (parse_light(data, content));
+	else if (!ft_strcmp(*content, "sp") || \
+		!ft_strcmp(*content, "pl") || \
+			!ft_strcmp(*content, "cy"))
+		return (parse_object(data, content)); */
+	return (0);
+}
 
-// 	split = ft_split(line, ' ');
-// 	if (!split)
-// 		return (print_error("ft_split fail"), terminate(data));
-// }
-
-// void	parse_elements(t_data *data, char *filename)
-// {
-// 	char	*line;
-
-// 	data->fd = open_infile(data, filename);
-// 	while (42)
-// 	{
-// 		line = gnl_safe(data, data->fd);
-// 		if (!line)
-// 			break ;
-// 		parse_line_content(data, line);
-// 		free(line);
-// 	}
-// 	gnl_safe(data, -1);
-// 	close(data->fd);
-// }
-
-void	check_forbidden_element(t_data *data, char *filename)
+void	parse_elements(t_data *data, char *filename)
 {
 	char	*line;
-	char	**spt;
+	char	**content;
 
 	data->fd = open_infile(data, filename);
 	while (42)
@@ -63,17 +65,18 @@ void	check_forbidden_element(t_data *data, char *filename)
 		line = gnl_safe(data, data->fd);
 		if (!line)
 			break ;
-		spt = ft_split(remove_endl(line), ' ');
+		content = ft_split(remove_endl(line), ' ');
 		free(line);
-		if (!spt)
-			return (print_error("ft_split fail"), terminate(data));
-		if (spt[0] && ft_strcmp(spt[0], "A") && ft_strcmp(spt[0], "C") && \
-			ft_strcmp(spt[0], "L") && ft_strcmp(spt[0], "sp") && \
-				ft_strcmp(spt[0], "pl") && ft_strcmp(spt[0], "cy") && \
-					ft_strcmp(spt[0], "\n"))
-			return (gnl_safe(data, -1), ft_freeall(spt), \
-				print_error("Unknown element type"), terminate(data));
-		ft_freeall(spt);
+		if (!content || parse_line_content(data, content))
+		{
+			if (!content)
+				print_error("ft_split fail");
+			else
+				ft_freeall(content);
+			gnl_safe(data, -1);
+			terminate(data);
+		}
+		ft_freeall(content);
 	}
 	gnl_safe(data, -1);
 	close(data->fd);
@@ -81,10 +84,7 @@ void	check_forbidden_element(t_data *data, char *filename)
 
 void	parsing_hub(t_data *data, char *filename)
 {
-	check_forbidden_element(data, filename);
-	check_unique_element(data, filename, "A");
-	check_unique_element(data, filename, "C");
-	check_unique_element(data, filename, "L");
+	check_elements(data, filename);
+	parse_elements(data, filename);
 	parse_filename(data, filename);
-	//parse_elements(data, filename);
 }
