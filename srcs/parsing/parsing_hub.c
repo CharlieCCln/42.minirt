@@ -6,51 +6,26 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:07:46 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/02 18:13:25 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:37:38 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-char	*remove_endl(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i] && line[i] != '\n')
-		i++;
-	line[i] = 0;
-	return (line);
-}
-
-int	open_infile(t_data *data, char *filename)
-{
-	int	fd;
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_putendl_fd("Error", 2);
-		perror(filename);
-		terminate(data);
-	}
-	return (fd);
-}
-
-int	parse_line_content(t_data *data, char **content)
+static int	parse_line_content(t_data *data, char **content)
 {
 	if (!*content)
 		return (0);
 	else if (!ft_strcmp(*content, "A"))
 		return (parse_ambient(data, content));
-/* 	else if (!ft_strcmp(*content, "C"))
+	else if (!ft_strcmp(*content, "C"))
 		return (parse_camera(data, content));
 	else if (!ft_strcmp(*content, "L"))
 		return (parse_light(data, content));
 	else if (!ft_strcmp(*content, "sp") || \
 		!ft_strcmp(*content, "pl") || \
 			!ft_strcmp(*content, "cy"))
-		return (parse_object(data, content)); */
+		return (parse_object(data, content));
 	return (0);
 }
 
@@ -87,4 +62,36 @@ void	parsing_hub(t_data *data, char *filename)
 	check_elements(data, filename);
 	parse_elements(data, filename);
 	parse_filename(data, filename);
+
+	int	i;
+	printf("AMBIENT /////\n");
+	printf("intensity = %f\n", data->ambient.intensity);
+	printf("r = %d g = %d b = %d hex = %d\n", \
+		data->ambient.color.r, data->ambient.color.g, \
+			data->ambient.color.b, data->ambient.color.hex);
+	printf("CAMERA /////\n");
+	printf("coords - x = %f - y = %f - z = %f\n", data->cam.coords.x, \
+		data->cam.coords.y, data->cam.coords.z);
+	printf("vector - x = %f - y = %f - z = %f\n", data->cam.vector.x, \
+		data->cam.vector.y, data->cam.vector.z);
+	printf("fov = %d\n", data->cam.fov);
+	printf("LIGHT /////\n");
+	printf("coords - x = %f - y = %f - z = %f\n", data->light.coords.x, \
+		data->light.coords.y, data->light.coords.z);
+	printf("intensity = %f\n", data->light.intensity);
+	printf("OBJECTS /////\n");
+	i = 0;
+	while (data->objects[i].diameter != -1)
+	{
+		printf("type = %d\n", data->objects[i].type);
+		printf("coords - x = %f - y = %f - z = %f\n", data->objects[i].coords.x, \
+			data->objects[i].coords.y, data->objects[i].coords.z);
+		printf("vector - x = %f - y = %f - z = %f\n", data->objects[i].vector.x, \
+			data->objects[i].vector.y, data->objects[i].vector.z);
+		printf("r = %d g = %d b = %d hex = %d\n", \
+			data->objects[i].color.r, data->objects[i].color.g, \
+				data->objects[i].color.b, data->objects[i].color.hex);
+		printf("size = %f * %f\n", data->objects[i].diameter, data->objects[i].height);
+		i++;
+	}
 }

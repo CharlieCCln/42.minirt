@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/02 18:14:14 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:58:19 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_data
 	t_cam		cam;
 	t_light		light;
 	t_object	*objects;
+	int			obj_index;
 	int			fd;
 }	t_data;
 
@@ -104,25 +105,57 @@ void	print_error(char *msg);
 
 // ----- PARSING -----
 
-// parsing/arg_check.c
-int		arg_check(char *arg);
-
 // parsing/parsing_hub.c
 void	parsing_hub(t_data *data, char *filename);
-int		open_infile(t_data *data, char *filename);
-char	*remove_endl(char *line);
 
-// parsing/check_elements.c
+// parsing/elements/parse_ambient.c
+int		parse_ambient(t_data *data, char **content);
+
+// parsing/elements/parse_camera.c
+int		parse_camera(t_data *data, char **content);
+
+// parsing/elements/parse_cylinder.c
+int		parse_cylinder(t_data *data, char **content);
+
+// parsing/elements/parse_light.c
+int		parse_light(t_data *data, char **content);
+
+// parsing/elements/parse_object.c
+int		parse_object(t_data *data, char **content);
+
+// parsing/elements/parse_plane.c
+int		parse_plane(t_data *data, char **content);
+
+// parsing/elements/parse_sphere.c
+int		parse_sphere(t_data *data, char **content);
+
+// parsing/utils/arg_check.c
+int		arg_check(char *arg);
+
+// parsing/utils/check_elements.c
 void	check_elements(t_data *data, char *filename);
 
-// parsing/gnl_safe.c
+// parsing/utils/get_double_value.c
+int		get_double_value(double *value, char *content);
+
+// parsing/utils/gnl_safe.c
 char	*gnl_safe(t_data *data, int fd);
 
-// parsing/parse_filename.c
+// parsing/utils/open_infile.c
+int		open_infile(t_data *data, char *filename);
+
+// parsing/utils/parse_color.c
+int		parse_color(t_color *color, char *content);
+
+// parsing/utils/parse_coords.c
+int		parse_coords(t_coords *coords, char *content);
+int		parse_vector(t_coords *vector, char *content);
+
+// parsing/utils/parse_filename.c
 void	parse_filename(t_data *data, char *filename);
 
-// parsing/parse_ambient.c
-int		parse_ambient(t_data *data, char **content);
+// parsing/utils/remove_endl.c
+char	*remove_endl(char *line);
 
 // ----- MEMORY -----
 

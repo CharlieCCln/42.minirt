@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 14:39:32 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/01 13:21:51 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:37:26 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void	bzero_everything(t_data *data)
 	ft_bzero(&data->light.coords, sizeof(t_coords));
 	ft_bzero(&data->light, sizeof(t_light));
 	data->objects = NULL;
+	data->obj_index = -1;
 }

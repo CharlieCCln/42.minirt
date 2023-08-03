@@ -6,7 +6,7 @@
 #    By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:33:09 by ccrottie          #+#    #+#              #
-#    Updated: 2023/08/02 18:24:56 by ccrottie         ###   ########.fr        #
+#    Updated: 2023/08/03 16:41:18 by ccrottie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,20 +27,31 @@ MLX_INC		=	minilibx-linux
 
 SRC_DIR		=	./srcs/
 SRC			=	main.c \
-				parsing/arg_check.c \
-				parsing/check_elements.c \
-				parsing/gnl_safe.c \
-				parsing/parse_ambient.c \
-				parsing/parse_filename.c \
-				parsing/parsing_hub.c \
 				memory/init.c \
-				memory/terminate.c
+				memory/terminate.c \
+				parsing/parsing_hub.c \
+				parsing/elements/parse_ambient.c \
+				parsing/elements/parse_camera.c \
+				parsing/elements/parse_cylinder.c \
+				parsing/elements/parse_light.c \
+				parsing/elements/parse_object.c \
+				parsing/elements/parse_plane.c \
+				parsing/elements/parse_sphere.c \
+				parsing/utils/arg_check.c \
+				parsing/utils/check_elements.c \
+				parsing/utils/get_double_value.c \
+				parsing/utils/gnl_safe.c \
+				parsing/utils/open_infile.c \
+				parsing/utils/parse_color.c \
+				parsing/utils/parse_coords.c \
+				parsing/utils/parse_filename.c \
+				parsing/utils/remove_endl.c
 
 OBJ_DIR		=	objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 CC			=	cc
-CC_FLAGS	=	-Wextra -Werror -Wall -O3 -fsanitize=address -g3
+CC_FLAGS	=	-Wextra -Werror -Wall -O3 -g3
 
 all: 			build_libft build_mlx $(NAME)
 
