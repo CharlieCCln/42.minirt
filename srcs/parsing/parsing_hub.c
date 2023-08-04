@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:07:46 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/03 16:37:38 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/04 14:31:55 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	parsing_hub(t_data *data, char *filename)
 			data->objects[i].color.r, data->objects[i].color.g, \
 				data->objects[i].color.b, data->objects[i].color.hex);
 		printf("size = %f * %f\n", data->objects[i].diameter, data->objects[i].height);
+		printf("-----\n");
 		i++;
 	}
 }

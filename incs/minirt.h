@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/03 14:58:19 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/04 14:34:52 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 # define MINIRT_H
 
 # include "../libft/libft.h"
-# include <mlx.h>
+# include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdlib.h> // malloc, free, exit
 # include <fcntl.h> // open
 # include <unistd.h> // read, write, close
 # include <stdio.h> // perror, printf
 # include <limits.h>
+# include <float.h>
 
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720

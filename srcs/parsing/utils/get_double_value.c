@@ -6,7 +6,7 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 11:42:30 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/03 16:44:19 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/04 14:31:28 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	minirt_atod(double *value, char *content)
 	{
 		overflow = *value;
 		*value = *value * 10 + (content[i] - 48);
-		if ((int)(*value / 10) != overflow)
+		if ((*value && *value == overflow) || isinf(*value))
 			return (1);
 		i++;
 	}
@@ -77,5 +77,8 @@ int	get_double_value(double *value, char *content)
 	if (content[i] && minirt_atod(&after, &content[i + 1]))
 		return (1);
 	*value = pos * (before + (after / pow(10, (ft_strlen(content) - i - 1))));
+	if ((*value == before && after != 0) || (*value == after && before != 0) || \
+		isinf(*value))
+		return (1);
 	return (0);
 }
