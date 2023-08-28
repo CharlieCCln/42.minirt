@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/04 14:34:52 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:57:26 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <limits.h>
 # include <float.h>
 
+# define KEY_ESC 65307
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
 # define MENU_WIDTH 320
@@ -34,6 +35,8 @@ typedef struct s_mlx
 	void	*img_ptr;
 	char	*win_name;
 	char	*addr;
+	int		size_x;
+	int		size_y;
 	int		bpp;
 	int		len;
 	int		end;
@@ -100,6 +103,13 @@ typedef struct s_data
 	int			obj_index;
 	int			fd;
 }	t_data;
+
+typedef struct s_ray
+{
+	t_coords	origin;
+	t_coords	direction;
+	t_coords	normal;
+}	t_ray;
 
 // main.c
 void	print_error(char *msg);

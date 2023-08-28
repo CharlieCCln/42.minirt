@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_hub.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:07:46 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/04 14:31:55 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/08/28 11:09:16 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,17 @@ void	parsing_hub(t_data *data, char *filename)
 	int	i;
 	printf("AMBIENT /////\n");
 	printf("intensity = %f\n", data->ambient.intensity);
-	printf("r = %d g = %d b = %d hex = %d\n", \
+	printf("r = %d | g = %d | b = %d | hex = %d\n", \
 		data->ambient.color.r, data->ambient.color.g, \
 			data->ambient.color.b, data->ambient.color.hex);
 	printf("CAMERA /////\n");
-	printf("coords - x = %f - y = %f - z = %f\n", data->cam.coords.x, \
+	printf("coords | x = %f | y = %f | z = %f\n", data->cam.coords.x, \
 		data->cam.coords.y, data->cam.coords.z);
-	printf("vector - x = %f - y = %f - z = %f\n", data->cam.vector.x, \
+	printf("vector | x = %f | y = %f | z = %f\n", data->cam.vector.x, \
 		data->cam.vector.y, data->cam.vector.z);
 	printf("fov = %d\n", data->cam.fov);
 	printf("LIGHT /////\n");
-	printf("coords - x = %f - y = %f - z = %f\n", data->light.coords.x, \
+	printf("coords | x = %f | y = %f | z = %f\n", data->light.coords.x, \
 		data->light.coords.y, data->light.coords.z);
 	printf("intensity = %f\n", data->light.intensity);
 	printf("OBJECTS /////\n");
@@ -84,11 +84,11 @@ void	parsing_hub(t_data *data, char *filename)
 	while (data->objects[i].diameter != -1)
 	{
 		printf("type = %d\n", data->objects[i].type);
-		printf("coords - x = %f - y = %f - z = %f\n", data->objects[i].coords.x, \
+		printf("coords | x = %f | y = %f | z = %f\n", data->objects[i].coords.x, \
 			data->objects[i].coords.y, data->objects[i].coords.z);
-		printf("vector - x = %f - y = %f - z = %f\n", data->objects[i].vector.x, \
+		printf("vector | x = %f | y = %f | z = %f\n", data->objects[i].vector.x, \
 			data->objects[i].vector.y, data->objects[i].vector.z);
-		printf("r = %d g = %d b = %d hex = %d\n", \
+		printf("r = %d | g = %d | b = %d | hex = %d\n", \
 			data->objects[i].color.r, data->objects[i].color.g, \
 				data->objects[i].color.b, data->objects[i].color.hex);
 		printf("size = %f * %f\n", data->objects[i].diameter, data->objects[i].height);
