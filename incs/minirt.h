@@ -6,7 +6,7 @@
 /*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/30 15:10:54 by colas            ###   ########.fr       */
+/*   Updated: 2023/08/30 17:26:34 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ typedef struct s_cam
 {
 	t_coords	coords;
 	t_coords	vector;
+	t_coords	normal;
+	t_coords 	hor_fov;
+	t_coords 	ver_fov;
 	int fov;
-	float hor_fov;
-	float ver_fov;
 }	t_cam;
 
 typedef struct s_light
@@ -133,7 +134,7 @@ void 	draw_rays(t_data *data);
 t_coords v_norm(t_coords v);
 t_coords v_scale(t_coords v, double scale);
 double v_dot(t_coords v, t_coords u);
-t_coords vector_operations(t_coords v, t_coords u, t_oper mode);
+t_coords v_operation(t_coords v, t_coords u, t_oper mode);
 
 // ----- PARSING -----
 

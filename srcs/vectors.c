@@ -6,7 +6,7 @@
 /*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 15:07:49 by colas             #+#    #+#             */
-/*   Updated: 2023/08/30 15:08:28 by colas            ###   ########.fr       */
+/*   Updated: 2023/08/30 17:20:16 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ double		v_dot(t_coords v, t_coords u)
 	return ((v.x * u.x) + (v.y * u.y) + (v.z * u.z));
 }
 
-t_coords vector_operations(t_coords v, t_coords u, t_oper mode) 
+t_coords vec_oper(t_coords v, t_coords u, t_oper mode) 
 {
 	if (mode == ADD)
 		return ((t_coords){(v.x + u.x), (v.y + u.y), (v.z + u.z)});

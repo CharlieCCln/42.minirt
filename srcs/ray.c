@@ -6,7 +6,7 @@
 /*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:15:08 by cgelin            #+#    #+#             */
-/*   Updated: 2023/08/30 15:07:55 by colas            ###   ########.fr       */
+/*   Updated: 2023/08/30 17:28:35 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,18 @@ void draw_rays(t_data *data)
 
 void get_cam_infos(t_data *data) 
 {
-	float theta;
-	float aspect_ratio;
-	
+	double theta;
+	double aspect_ratio;
+	double fov[2];
+	t_coords tmp[3];
+
 	theta = (M_PI / 180) * data->cam.fov;
 	aspect_ratio = SCREEN_WIDTH / SCREEN_HEIGHT;
-	w = v_norm(v_scale(cam->normal, -1));
-	u = v_cross(gen_coord(0, 1, 0), w);
-	v = v_cross(w, u);
-	data->cam.hor_fov = 2 * tan(theta / 2);
-	data->cam.hor_fov = data->cam.ver_fov * aspect_ratio;
+	fov[0] = 2 * tan(theta / 2);
+	fov[1] = fov[0] * aspect_ratio;
+	tmp[0] = v_norm(v_scale(data->cam.normal, -1));
+	tmp[1] = v_operation((t_coords){0, 1, 0}, tmp[0], CROSS);
+	tmp[2] = v_operation(tmp[0], tmp[1], CROSS);
+	data->cam.hor_fov = v_scale(tmp[1], fov[0]);
+	data->cam.ver_fov = v_scale(tmp[2], fov[1]);
 }
