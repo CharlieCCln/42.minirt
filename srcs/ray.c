@@ -6,7 +6,7 @@
 /*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:15:08 by cgelin            #+#    #+#             */
-/*   Updated: 2023/08/30 17:28:35 by colas            ###   ########.fr       */
+/*   Updated: 2023/08/30 17:31:32 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_ray create_ray(t_cam cam, float x, float y)
 	t_ray ray;
 
 	ray.origin = cam.coords;
-	ray.dir = v_add(v_scale(cam.hor_fov, x), v_scale(cam.ver_fov, y));
+	ray.dir = v_operation(v_scale(cam.hor_fov, x), v_scale(cam.ver_fov, y), ADD);
 	
 	// printf("or : rayx = %f, rayy = %f, rayz = %f\n dir : rayx = %f, rayy = %f, rayz = %f\n", ray.origin.x, ray.origin.y, ray.origin.z, ray.dir.x, ray.dir.y, ray.dir.z);
 	return (ray);
