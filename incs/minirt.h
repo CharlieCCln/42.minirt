@@ -6,16 +6,17 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/28 15:28:32 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/08/30 12:09:50 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
+#define _USE_MATH_DEFINES
+# include <math.h>
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
-# include <math.h>
 # include <stdlib.h> // malloc, free, exit
 # include <fcntl.h> // open
 # include <unistd.h> // read, write, close
@@ -23,6 +24,7 @@
 # include <limits.h>
 # include <float.h>
 
+# define M_PI 3.14159265358979332384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 # define KEY_ESC 65307
 # define SCREEN_WIDTH 1280
 # define SCREEN_HEIGHT 720
@@ -74,7 +76,9 @@ typedef struct s_cam
 {
 	t_coords	coords;
 	t_coords	vector;
-	int			fov;
+	int fov;
+	float hor_fov;
+	float ver_fov;
 }	t_cam;
 
 typedef struct s_light
@@ -113,6 +117,11 @@ typedef struct s_ray
 
 // main.c
 void	print_error(char *msg);
+
+// ----- RAYTRACING -----
+
+void 	get_cam_infos(t_data *data);
+void 	draw_rays(t_data *data);
 
 // ----- PARSING -----
 
