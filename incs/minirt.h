@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/30 12:09:50 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/08/30 15:09:48 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,13 @@ typedef enum e_type
 	CYLINDER
 }	t_type;
 
+typedef enum e_oper
+{
+	ADD,
+	SUB,
+	CROSS,
+}	t_oper;
+
 typedef struct s_ambient
 {
 	double		intensity;
@@ -122,6 +129,11 @@ void	print_error(char *msg);
 
 void 	get_cam_infos(t_data *data);
 void 	draw_rays(t_data *data);
+
+t_coords v_norm(t_coords v);
+t_coords v_scale(t_coords v, double scale);
+double v_dot(t_coords v, t_coords u);
+t_coords vector_operations(t_coords v, t_coords u, t_oper mode);
 
 // ----- PARSING -----
 

@@ -3,36 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:15:08 by cgelin            #+#    #+#             */
-/*   Updated: 2023/08/30 13:25:46 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/08/30 15:07:55 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_coords v_add (t_coords v, t_coords u) 
-{
-	return ((t_coords){(v.x + u.x), (v.y + u.y), (v.z + u.z)});
-}
-
-t_coords	v_sub(t_coords v, t_coords u)
-{
-	return ((t_coords){(v.x - u.x), (v.y - u.y), (v.z - u.z)});
-}
-
-t_coords v_scale (t_coords v, double scale) 
-{
-	return ((t_coords){scale * v.x, scale * v.y, scale * v.z});
-}
-
-t_coords v_cross (t_coords v, t_coords u) 
-{
-	return ((t_coords){(v.y * u.z) - (v.z * u.y),
-						(v.z * u.x) - (v.x * u.z),
-						(v.x * u.y) - (v.y * u.x)});
-}
 
 
 t_ray create_ray(t_cam cam, float x, float y) 
