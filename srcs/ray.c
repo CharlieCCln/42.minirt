@@ -6,7 +6,7 @@
 /*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:15:08 by cgelin            #+#    #+#             */
-/*   Updated: 2023/08/30 17:31:32 by colas            ###   ########.fr       */
+/*   Updated: 2023/08/30 17:37:12 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ void draw_rays(t_data *data)
 	}
 }
 
-void get_cam_infos(t_data *data) 
+void	get_cam_infos(t_data *data)
 {
-	double theta;
-	double aspect_ratio;
-	double fov[2];
-	t_coords tmp[3];
+	double		theta;
+	double		aspect_ratio;
+	double		fov[2];
+	t_coords	tmp[3];
 
 	theta = (M_PI / 180) * data->cam.fov;
 	aspect_ratio = SCREEN_WIDTH / SCREEN_HEIGHT;
