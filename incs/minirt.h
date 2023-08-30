@@ -6,7 +6,7 @@
 /*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/30 17:26:34 by colas            ###   ########.fr       */
+/*   Updated: 2023/08/30 21:06:48 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ typedef struct s_cam
 {
 	t_coords	coords;
 	t_coords	vector;
-	t_coords	normal;
+	t_coords	v_normal;
 	t_coords 	hor_fov;
 	t_coords 	ver_fov;
+	t_coords 	ll_corner;
 	int fov;
 }	t_cam;
 
@@ -128,7 +129,7 @@ void	print_error(char *msg);
 
 // ----- RAYTRACING -----
 
-void 	get_cam_infos(t_data *data);
+void 	get_cam_infos(t_cam *cam);
 void 	draw_rays(t_data *data);
 
 t_coords v_norm(t_coords v);
