@@ -45,7 +45,9 @@ SRC			=	main.c \
 				parsing/utils/parse_color.c \
 				parsing/utils/parse_coords.c \
 				parsing/utils/parse_filename.c \
-				parsing/utils/remove_endl.c
+				parsing/utils/remove_endl.c \
+				ray.c \
+				vectors.c
 
 OBJ_DIR		=	objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)

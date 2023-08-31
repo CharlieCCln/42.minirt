@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static int	parse_fov(int *fov, char *content)
+static int	_parse_fov(int *fov, char *content)
 {
 	int	i;
 
@@ -48,7 +48,7 @@ int	parse_camera(t_data *data, char **content)
 		print_error("Camera : incorrect vector format or value");
 		return (1);
 	}
-	if (parse_fov(&data->cam.fov, content[3]))
+	if (_parse_fov(&data->cam.fov, content[3]))
 	{
 		print_error("Camera : incorrect FOV format or value");
 		return (1);

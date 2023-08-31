@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static int	check_color_format(char *content)
+static int	_check_color_format(char *content)
 {
 	int	i;
 	int	j;
@@ -39,7 +39,7 @@ static int	check_color_format(char *content)
 	return (0);
 }
 
-static int	ft_atoi_safe(char *arg)
+static int	_ft_atoi_safe(char *arg)
 {
 	int	i;
 	int	res;
@@ -62,7 +62,7 @@ int	parse_color(t_color *color, char *content)
 {
 	char	**split;
 
-	if (check_color_format(content))
+	if (_check_color_format(content))
 		return (1);
 	split = ft_split(content, ',');
 	if (!split)
@@ -70,9 +70,9 @@ int	parse_color(t_color *color, char *content)
 		ft_putendl_fd("parse_color ft_split fail", 2);
 		return (1);
 	}
-	color->r = ft_atoi_safe(split[0]);
-	color->g = ft_atoi_safe(split[1]);
-	color->b = ft_atoi_safe(split[2]);
+	color->r = _ft_atoi_safe(split[0]);
+	color->g = _ft_atoi_safe(split[1]);
+	color->b = _ft_atoi_safe(split[2]);
 	ft_freeall(split);
 	if (color->r > 255 || color->g > 255 || color->b > 255 || \
 		color->r < 0 || color->g < 0 || color->b < 0)

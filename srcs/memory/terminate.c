@@ -14,16 +14,23 @@
 
 void	terminate(t_data *data)
 {
-	if (data->mlx.mlx_ptr)
-		mlx_destroy_display(data->mlx.mlx_ptr);
-	if (data->mlx.win_ptr)
-		mlx_destroy_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
+	int	code;
+
+	code = 1;
 	if (data->mlx.img_ptr)
 		mlx_destroy_image(data->mlx.mlx_ptr, data->mlx.img_ptr);
+	if (data->mlx.win_ptr)
+		mlx_destroy_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
+	if (data->mlx.mlx_ptr)
+	{
+		code = 0;
+		mlx_destroy_display(data->mlx.mlx_ptr);
+		free(data->mlx.mlx_ptr);
+	}
 	if (data->mlx.win_name)
 		free(data->mlx.win_name);
 	if (data->objects)
 		free(data->objects);
 	close(data->fd);
-	exit(1);
+	exit(code);
 }

@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static int	check_coords_format(char *content)
+static int	_check_coords_format(char *content)
 {
 	int	i;
 	int	j;
@@ -44,7 +44,7 @@ int	parse_coords(t_coords *coords, char *content)
 {
 	char	**split;
 
-	if (check_coords_format(content))
+	if (_check_coords_format(content))
 		return (1);
 	split = ft_split(content, ',');
 	if (!split)

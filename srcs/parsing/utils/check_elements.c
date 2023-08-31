@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static void	check_counts(t_data *data, int *counts)
+static void	_check_counts(t_data *data, int *counts)
 {
 	if (counts[0] != 1)
 		print_error("There should be 1 Ambient element (A)");
@@ -24,7 +24,7 @@ static void	check_counts(t_data *data, int *counts)
 		terminate(data);
 }
 
-static void	check_line_content(t_data *data, char **content, int *counts)
+static void	_check_line_content(t_data *data, char **content, int *counts)
 {
 	if (!*content)
 		return ;
@@ -65,11 +65,11 @@ void	check_elements(t_data *data, char *filename)
 		if (!content)
 			return (gnl_safe(data, -1), print_error("ft_split fail"), \
 				terminate(data));
-		check_line_content(data, content, counts);
+		_check_line_content(data, content, counts);
 		ft_freeall(content);
 	}
 	gnl_safe(data, -1);
 	close(data->fd);
-	check_counts(data, counts);
+	_check_counts(data, counts);
 	allocate_objects(data, counts);
 }

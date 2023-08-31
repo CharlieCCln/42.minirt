@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static int	parse_cylinder_size(t_data *data, char **content)
+static int	_parse_cylinder_size(t_data *data, char **content)
 {
 	if (get_double_value(&data->objects[data->obj_index].diameter, content[3]))
 	{
@@ -27,7 +27,7 @@ static int	parse_cylinder_size(t_data *data, char **content)
 	return (0);
 }
 
-static int	parse_cylinder_coords_vector(t_data *data, char **content)
+static int	_parse_cylinder_coords_vector(t_data *data, char **content)
 {
 	if (parse_coords(&data->objects[data->obj_index].coords, content[1]))
 	{
@@ -52,9 +52,9 @@ int	parse_cylinder(t_data *data, char **content)
 		!content[5] || content[6])
 		return (1);
 	data->objects[data->obj_index].type = CYLINDER;
-	if (parse_cylinder_coords_vector(data, content))
+	if (_parse_cylinder_coords_vector(data, content))
 		return (1);
-	if (parse_cylinder_size(data, content))
+	if (_parse_cylinder_size(data, content))
 		return (1);
 	if (parse_color(&data->objects[data->obj_index].color, content[5]))
 	{

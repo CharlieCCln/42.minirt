@@ -14,7 +14,8 @@
 
 void	parse_filename(t_data *data, char *filename)
 {
-	int	i;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (filename[i])
@@ -22,7 +23,14 @@ void	parse_filename(t_data *data, char *filename)
 	i--;
 	while (i > 0 && filename[i] != '/')
 		i--;
-	data->mlx.win_name = ft_strdup(&filename[i + 1]);
+	temp = ft_strdup(&filename[i + 1]);
+	if (!temp)
+	{
+		print_error("parse_filename fail");
+		terminate(data);
+	}
+	data->mlx.win_name = ft_strjoin("miniRT - ", temp);
+	free(temp);
 	if (!data->mlx.win_name)
 	{
 		print_error("parse_filename fail");

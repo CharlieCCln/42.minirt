@@ -32,13 +32,13 @@ double	v_dot(t_coords v, t_coords u)
 	return ((v.x * u.x) + (v.y * u.y) + (v.z * u.z));
 }
 
-t_coords	vec_oper(t_coords v, t_coords u, t_oper mode)
+t_coords	v_oper(t_coords v, t_coords u, t_oper mode)
 {
 	if (mode == ADD)
 		return ((t_coords){(v.x + u.x), (v.y + u.y), (v.z + u.z)});
 	else if (mode == SUB)
 		return ((t_coords){(v.x - u.x), (v.y - u.y), (v.z - u.z)});
-	else if (mode == CROSS)
+	else
 		return ((t_coords){(v.y * u.z) - (v.z * u.y),
 			(v.z * u.x) - (v.x * u.z),
 			(v.x * u.y) - (v.y * u.x)});

@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static int	parse_line_content(t_data *data, char **content)
+static int	_parse_line_content(t_data *data, char **content)
 {
 	if (!*content)
 		return (0);
@@ -42,7 +42,7 @@ void	parse_elements(t_data *data, char *filename)
 			break ;
 		content = ft_split(remove_endl(line), ' ');
 		free(line);
-		if (!content || parse_line_content(data, content))
+		if (!content || _parse_line_content(data, content))
 		{
 			if (!content)
 				print_error("ft_split fail");
@@ -62,7 +62,7 @@ void	parsing_hub(t_data *data, char *filename)
 	check_elements(data, filename);
 	parse_elements(data, filename);
 	parse_filename(data, filename);
-
+/* 
 	int	i;
 	printf("AMBIENT /////\n");
 	printf("intensity = %f\n", data->ambient.intensity);
@@ -94,5 +94,5 @@ void	parsing_hub(t_data *data, char *filename)
 		printf("size = %f * %f\n", data->objects[i].diameter, data->objects[i].height);
 		printf("-----\n");
 		i++;
-	}
+	} */
 }

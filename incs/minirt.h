@@ -24,11 +24,10 @@
 # include <limits.h>
 # include <float.h>
 
-# define M_PI 3.14159265358979332384626433832795028841971693993751058209749445923078164062862089986280348253421170679
+//# define M_PI 3.14159265358979332384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 # define KEY_ESC 65307
-# define SCREEN_WIDTH 1280
-# define SCREEN_HEIGHT 720
-# define MENU_WIDTH 320
+# define WIDTH 1280
+# define HEIGHT 720
 
 typedef struct s_mlx
 {
@@ -37,8 +36,6 @@ typedef struct s_mlx
 	void	*img_ptr;
 	char	*win_name;
 	char	*addr;
-	int		size_x;
-	int		size_y;
 	int		bpp;
 	int		len;
 	int		end;
@@ -87,7 +84,7 @@ typedef struct s_cam
 	t_coords 	hor_fov;
 	t_coords 	ver_fov;
 	t_coords 	ll_corner;
-	int fov;
+	int 		fov;
 }	t_cam;
 
 typedef struct s_light
@@ -125,79 +122,79 @@ typedef struct s_ray
 }	t_ray;
 
 // main.c
-void	print_error(char *msg);
+void		print_error(char *msg);
 
 // ----- RAYTRACING -----
 
-void 	get_cam_infos(t_cam *cam);
-void 	draw_rays(t_data *data);
+void 		set_camera(t_cam *cam);
+void 		draw_rays(t_data *data);
 
-t_coords v_norm(t_coords v);
-t_coords v_scale(t_coords v, double scale);
-double v_dot(t_coords v, t_coords u);
-t_coords v_operation(t_coords v, t_coords u, t_oper mode);
+t_coords	v_norm(t_coords v);
+t_coords	v_scale(t_coords v, double scale);
+double		v_dot(t_coords v, t_coords u);
+t_coords	v_oper(t_coords v, t_coords u, t_oper mode);
 
 // ----- PARSING -----
 
 // parsing/parsing_hub.c
-void	parsing_hub(t_data *data, char *filename);
+void		parsing_hub(t_data *data, char *filename);
 
 // parsing/elements/parse_ambient.c
-int		parse_ambient(t_data *data, char **content);
+int			parse_ambient(t_data *data, char **content);
 
 // parsing/elements/parse_camera.c
-int		parse_camera(t_data *data, char **content);
+int			parse_camera(t_data *data, char **content);
 
 // parsing/elements/parse_cylinder.c
-int		parse_cylinder(t_data *data, char **content);
+int			parse_cylinder(t_data *data, char **content);
 
 // parsing/elements/parse_light.c
-int		parse_light(t_data *data, char **content);
+int			parse_light(t_data *data, char **content);
 
 // parsing/elements/parse_object.c
-int		parse_object(t_data *data, char **content);
+int			parse_object(t_data *data, char **content);
 
 // parsing/elements/parse_plane.c
-int		parse_plane(t_data *data, char **content);
+int			parse_plane(t_data *data, char **content);
 
 // parsing/elements/parse_sphere.c
-int		parse_sphere(t_data *data, char **content);
+int			parse_sphere(t_data *data, char **content);
 
 // parsing/utils/arg_check.c
-int		arg_check(char *arg);
+int			arg_check(char *arg);
 
 // parsing/utils/check_elements.c
-void	check_elements(t_data *data, char *filename);
+void		check_elements(t_data *data, char *filename);
 
 // parsing/utils/get_double_value.c
-int		get_double_value(double *value, char *content);
+int			get_double_value(double *value, char *content);
 
 // parsing/utils/gnl_safe.c
-char	*gnl_safe(t_data *data, int fd);
+char		*gnl_safe(t_data *data, int fd);
 
 // parsing/utils/open_infile.c
-int		open_infile(t_data *data, char *filename);
+int			open_infile(t_data *data, char *filename);
 
 // parsing/utils/parse_color.c
-int		parse_color(t_color *color, char *content);
+int			parse_color(t_color *color, char *content);
 
 // parsing/utils/parse_coords.c
-int		parse_coords(t_coords *coords, char *content);
-int		parse_vector(t_coords *vector, char *content);
+int			parse_coords(t_coords *coords, char *content);
+int			parse_vector(t_coords *vector, char *content);
 
 // parsing/utils/parse_filename.c
-void	parse_filename(t_data *data, char *filename);
+void		parse_filename(t_data *data, char *filename);
 
 // parsing/utils/remove_endl.c
-char	*remove_endl(char *line);
+char		*remove_endl(char *line);
 
 // ----- MEMORY -----
 
 // memory/init.c
-void	bzero_everything(t_data *data);
-void	allocate_objects(t_data *data, int *counts);
+void		bzero_everything(t_data *data);
+void		allocate_objects(t_data *data, int *counts);
 
 // memory/terminate.c
-void	terminate(t_data *data);
+void		terminate(t_data *data);
 
 #endif

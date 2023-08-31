@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static char	*ft_strjoin_and_free(t_data *data, char *s1, char *s2)
+static char	*_ft_strjoin_and_free(t_data *data, char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -41,7 +41,7 @@ static char	*ft_strjoin_and_free(t_data *data, char *s1, char *s2)
 	return (free(s1), join);
 }
 
-static char	*trim_line(t_data *data, char *line, char *buf)
+static char	*_trim_line(t_data *data, char *line, char *buf)
 {
 	int		i;
 	int		len;
@@ -66,7 +66,7 @@ static char	*trim_line(t_data *data, char *line, char *buf)
 	return (trim);
 }
 
-static char	*get_buf(char *line, char *buf)
+static char	*_get_buf(char *line, char *buf)
 {
 	size_t	i;
 	size_t	j;
@@ -91,7 +91,7 @@ static char	*get_buf(char *line, char *buf)
 	return (buf);
 }
 
-static char	*fd_read(t_data *data, int fd, char *buf)
+static char	*_fd_read(t_data *data, int fd, char *buf)
 {
 	char	*line;
 	int		ret;
@@ -103,7 +103,7 @@ static char	*fd_read(t_data *data, int fd, char *buf)
 	line[0] = 0;
 	if (buf[0])
 	{
-		line = ft_strjoin_and_free(data, line, buf);
+		line = _ft_strjoin_and_free(data, line, buf);
 		if (!line)
 			return (NULL);
 	}
@@ -113,7 +113,7 @@ static char	*fd_read(t_data *data, int fd, char *buf)
 		if (!ret && !buf[0])
 			return (free(line), NULL);
 		buf[ret] = 0;
-		line = ft_strjoin_and_free(data, line, buf);
+		line = _ft_strjoin_and_free(data, line, buf);
 		if (!line)
 			return (NULL);
 	}
@@ -134,11 +134,11 @@ char	*gnl_safe(t_data *data, int fd)
 			return (print_error("GNL fail"), terminate(data), NULL);
 		buf[0] = 0;
 	}
-	line = fd_read(data, fd, buf);
+	line = _fd_read(data, fd, buf);
 	if (!line)
 		return (free(buf), buf = NULL, NULL);
-	buf = get_buf(line, buf);
-	line = trim_line(data, line, buf);
+	buf = _get_buf(line, buf);
+	line = _trim_line(data, line, buf);
 	if (!line)
 		return (free(buf), buf = NULL, NULL);
 	return (line);

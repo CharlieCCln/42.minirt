@@ -19,28 +19,30 @@ void	print_error(char *msg)
 	ft_putendl_fd(msg, 2);
 }
 
-int			mlx_exit(t_data *data) 
-{
-	if (data->mlx.win_ptr)
-	{
-		mlx_clear_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
-		mlx_destroy_window(data->mlx.mlx_ptr, data->mlx.win_ptr);
-	}
-	return (exit(0), 0);
-}
-
 int key_press(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
-		mlx_exit(data);
+		terminate(data);
+	return (0);
+}
+
+int	call_terminate(t_data *data)
+{
+	terminate(data);
 	return (0);
 }
 
 void init_mlx(t_data *data)
 {
 	data->mlx.mlx_ptr = mlx_init();
-	data->mlx.win_ptr = mlx_new_window(data->mlx.mlx_ptr, SCREEN_WIDTH, SCREEN_HEIGHT, "Window");
-	mlx_hook(data->mlx.win_ptr, DestroyNotify, StructureNotifyMask, mlx_exit, data);
+	data->mlx.win_ptr = mlx_new_window(data->mlx.mlx_ptr, \
+		WIDTH, HEIGHT, data->mlx.win_name);
+	data->mlx.img_ptr = mlx_new_image(data->mlx.mlx_ptr, WIDTH, HEIGHT);
+	data->mlx.addr = mlx_get_data_addr(data->mlx.img_ptr, &data->mlx.bpp, \
+		&data->mlx.len, &data->mlx.end);
+	data->mlx.bpp /= 8;
+	mlx_hook(data->mlx.win_ptr, DestroyNotify, StructureNotifyMask, \
+		call_terminate, data);
 	mlx_key_hook(data->mlx.win_ptr, key_press, data);
 }
 
@@ -57,7 +59,7 @@ int	main(int argc, char **argv)
 	}
 	parsing_hub(&data, argv[1]);
 	init_mlx(&data);
-	get_cam_infos(&data);
+	set_camera(&data.cam);
 	// draw_rays(&data);
 	mlx_loop(data.mlx.mlx_ptr);
 	terminate(&data);

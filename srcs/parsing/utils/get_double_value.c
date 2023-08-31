@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-static int	check_double_format(char *content)
+static int	_check_double_format(char *content)
 {
 	int	i;
 
@@ -36,7 +36,7 @@ static int	check_double_format(char *content)
 	return (0);
 }
 
-static int	minirt_atod(double *value, char *content)
+static int	_minirt_atod(double *value, char *content)
 {
 	int		i;
 	double	overflow;
@@ -62,7 +62,7 @@ int	get_double_value(double *value, char *content)
 	double	before;
 	double	after;
 
-	if (check_double_format(content))
+	if (_check_double_format(content))
 		return (1);
 	i = 0;
 	pos = 1;
@@ -70,11 +70,11 @@ int	get_double_value(double *value, char *content)
 	after = 0;
 	if (content[0] == '-')
 		pos = -1;
-	if (minirt_atod(&before, content))
+	if (_minirt_atod(&before, content))
 		return (1);
 	while (content[i] && content[i] != '.')
 		i++;
-	if (content[i] && minirt_atod(&after, &content[i + 1]))
+	if (content[i] && _minirt_atod(&after, &content[i + 1]))
 		return (1);
 	*value = pos * (before + (after / pow(10, (ft_strlen(content) - i - 1))));
 	if ((*value == before && after != 0) || (*value == after && before != 0) || \
