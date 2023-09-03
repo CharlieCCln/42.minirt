@@ -6,7 +6,7 @@
 /*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/30 21:06:48 by colas            ###   ########.fr       */
+/*   Updated: 2023/09/01 16:53:22 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define KEY_ESC 65307
 # define WIDTH 1280
 # define HEIGHT 720
+# define X 0
+# define Y 1
+# define Z 2
 
 typedef struct s_mlx
 {

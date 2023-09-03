@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_hub.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 15:07:46 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/28 11:09:16 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/08/31 20:43:33 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	_parse_line_content(t_data *data, char **content)
 	return (0);
 }
 
-void	parse_elements(t_data *data, char *filename)
+static void	_parse_elements(t_data *data, char *filename)
 {
 	char	*line;
 	char	**content;
