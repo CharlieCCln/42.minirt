@@ -18,9 +18,8 @@ void	get_low_left_corner_pos(t_cam *cam, t_coords z_axis)
 	3/4 - Calculating viewport height, and then width using aspect ratio.
 	5 - Normalizing camera vector.
 */
-double *calculating_viewport(t_cam *cam) 
+void	calculating_viewport(t_cam *cam, double *viewport)
 {
-	double		viewport[2];
 	double		theta;
 	double		aspect_ratio;
 
@@ -33,10 +32,8 @@ double *calculating_viewport(t_cam *cam)
 }
 
 // Calculating axis : depth, horizontal and vertical.
-t_coords *calculating_axis(t_cam *cam) 
+void	calculating_axis(t_cam *cam, t_coords *axis) 
 {
-	t_coords
-	
 	axis[Z] = v_norm(v_scale(cam->dir_norm, -1));
 	axis[X] = v_oper((t_coords){0, 1, 0}, axis[Z], CROSS);
 	axis[Y] = v_oper(axis[Z], axis[X], CROSS);
@@ -58,11 +55,11 @@ void    calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
 */
 void	set_camera(t_cam *cam)
 {
-	double      *viewport;
-	t_coords    *axis;
+	double      viewport[2];
+	t_coords    axis[3];
 	
-	viewport = calculating_viewports(cam);
-	axis = calculating_axis(cam);
+	calculating_viewports(cam, viewport);
+	calculating_axis(cam, axis);
 	calculating_axis_fov(cam, axis, viewport);
 	get_low_left_corner_pos(cam, axis[Z]);
 }
