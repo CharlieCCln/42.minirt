@@ -6,10 +6,11 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 14:39:32 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/03 16:37:26 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/09/06 12:50:37 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <X11/X.h>
 #include "minirt.h"
 
 void	init_mlx(t_data *data)

@@ -6,11 +6,10 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:47:03 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/06 11:28:44 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/09/06 12:50:19 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <X11/X.h>
 #include "minirt.h"
 
 int	main(int argc, char **argv)

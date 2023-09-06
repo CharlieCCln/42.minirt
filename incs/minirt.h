@@ -6,14 +6,14 @@
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/06 11:31:08 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/09/06 12:56:13 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINIRT_H
 # define MINIRT_H
 
-#define _USE_MATH_DEFINES
+# define _USE_MATH_DEFINES
 # include <math.h>
 # include "../libft/libft.h"
 # include "../minilibx-linux/mlx.h"
@@ -22,7 +22,7 @@
 # include <unistd.h> // read, write, close
 # include <stdio.h> // perror, printf
 # include <limits.h>
-# include <float.h>
+# include "float.h"
 
 //# define M_PI 3.14159265358979332384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 # define KEY_ESC 65307
@@ -84,10 +84,10 @@ typedef struct s_cam
 	t_coords	coords;
 	t_coords	vector;
 	t_coords	v_normal;
-	t_coords 	hor_fov;
-	t_coords 	ver_fov;
-	t_coords 	ll_corner;
-	int 		fov;
+	t_coords	hor_fov;
+	t_coords	ver_fov;
+	t_coords	ll_corner;
+	int			fov;
 }	t_cam;
 
 typedef struct s_light
@@ -126,18 +126,22 @@ typedef struct s_ray
 
 // events.c
 void		print_error(char *msg);
-int 		key_press(int keycode, t_data *data);
+int			key_press(int keycode, t_data *data);
 int			call_terminate(t_data *data);
 
-// ----- RAYTRACING -----
+// ----- DRAWING -----
 
-void 		set_camera(t_cam *cam);
-void 		draw_rays(t_data *data);
+void		set_camera(t_cam *cam);
+void		draw_rays(t_data *data);
 
+// drawing/vectors.c
 t_coords	v_norm(t_coords v);
 t_coords	v_scale(t_coords v, double scale);
 double		v_dot(t_coords v, t_coords u);
 t_coords	v_oper(t_coords v, t_coords u, t_oper mode);
+
+// drawing/pixel_put.c
+void		pixel_put(t_mlx *mlx, int x, int y, int color);
 
 // ----- PARSING -----
 
