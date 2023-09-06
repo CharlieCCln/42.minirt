@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/01 16:53:22 by colas            ###   ########.fr       */
+/*   Updated: 2023/09/06 11:31:08 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,10 @@ typedef struct s_ray
 	t_coords	normal;
 }	t_ray;
 
-// main.c
+// events.c
 void		print_error(char *msg);
+int 		key_press(int keycode, t_data *data);
+int			call_terminate(t_data *data);
 
 // ----- RAYTRACING -----
 
@@ -194,6 +196,7 @@ char		*remove_endl(char *line);
 // ----- MEMORY -----
 
 // memory/init.c
+void		init_mlx(t_data *data);
 void		bzero_everything(t_data *data);
 void		allocate_objects(t_data *data, int *counts);
 

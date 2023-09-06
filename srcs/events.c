@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/24 14:47:03 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/06 11:28:44 by ccrottie         ###   ########.fr       */
+/*   Created: 2023/09/06 11:28:21 by ccrottie          #+#    #+#             */
+/*   Updated: 2023/09/06 11:28:48 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <X11/X.h>
 #include "minirt.h"
 
-int	main(int argc, char **argv)
+void	print_error(char *msg)
 {
-	t_data	data;
+	ft_putendl_fd("Error", 2);
+	ft_putendl_fd(msg, 2);
+}
 
-	bzero_everything(&data);
-	if (argc != 2 || arg_check(argv[1]))
-	{
-		print_error("Please use \"./miniRT path/to/file.rt\"");
-		terminate(&data);
-	}
-	parsing_hub(&data, argv[1]);
-	init_mlx(&data);
-	set_camera(&data.cam);
-	// draw_rays(&data);
-	mlx_loop(data.mlx.mlx_ptr);
-	terminate(&data);
+int key_press(int keycode, t_data *data)
+{
+	if (keycode == KEY_ESC)
+		terminate(data);
+	return (0);
+}
+
+int	call_terminate(t_data *data)
+{
+	terminate(data);
 	return (0);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+         #
+#    By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:33:09 by ccrottie          #+#    #+#              #
-#    Updated: 2023/08/28 11:01:47 by cgelin           ###   ########.fr        #
+#    Updated: 2023/09/06 11:32:11 by ccrottie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ MLX_INC		=	minilibx-linux
 
 SRC_DIR		=	./srcs/
 SRC			=	main.c \
+				events.c \
 				memory/init.c \
 				memory/terminate.c \
 				parsing/parsing_hub.c \

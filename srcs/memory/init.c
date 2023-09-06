@@ -12,6 +12,20 @@
 
 #include "minirt.h"
 
+void	init_mlx(t_data *data)
+{
+	data->mlx.mlx_ptr = mlx_init();
+	data->mlx.win_ptr = mlx_new_window(data->mlx.mlx_ptr, \
+		WIDTH, HEIGHT, data->mlx.win_name);
+	data->mlx.img_ptr = mlx_new_image(data->mlx.mlx_ptr, WIDTH, HEIGHT);
+	data->mlx.addr = mlx_get_data_addr(data->mlx.img_ptr, &data->mlx.bpp, \
+		&data->mlx.len, &data->mlx.end);
+	data->mlx.bpp /= 8;
+	mlx_hook(data->mlx.win_ptr, DestroyNotify, StructureNotifyMask, \
+		call_terminate, data);
+	mlx_key_hook(data->mlx.win_ptr, key_press, data);
+}
+
 void	allocate_objects(t_data *data, int *counts)
 {
 	int	i;
