@@ -60,7 +60,7 @@ static void	_parse_elements(t_data *data, char *filename)
 void	parsing_hub(t_data *data, char *filename)
 {
 	check_elements(data, filename);
-	parse_elements(data, filename);
+	_parse_elements(data, filename);
 	parse_filename(data, filename);
 /* 
 	int	i;

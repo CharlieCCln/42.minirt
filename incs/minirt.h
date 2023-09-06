@@ -24,13 +24,14 @@
 # include <limits.h>
 # include "float.h"
 
-# define M_PI 3.14159265358979332384626433832795028841971693993751058209749445923078164062862089986280348253421170679
+//# define M_PI 3.14159265358979332384626433832795028841971693993751058209749445923078164062862089986280348253421170679
 # define KEY_ESC 65307
 # define WIDTH 1280
 # define HEIGHT 720
 # define X 0
 # define Y 1
 # define Z 2
+# define EPSILON 0.00001
 
 typedef struct s_mlx
 {
@@ -81,7 +82,7 @@ typedef struct s_ambient
 
 typedef struct s_cam
 {
-	t_coords	ori;
+	t_coords	origin;
 	t_coords	dir;
 	t_coords	dir_norm;
 	t_coords	hor_fov;
@@ -113,7 +114,7 @@ typedef struct s_data
 	t_cam		cam;
 	t_light		light;
 	t_object	*objects;
-	int			obj_index;
+	int			obj_nbr;
 	int			fd;
 }	t_data;
 
@@ -121,7 +122,11 @@ typedef struct s_ray
 {
 	t_coords	origin;
 	t_coords	dir;
-	t_coords	norm;
+	t_coords	dir_norm;
+	double		dist;
+	t_coords	hit;
+	t_coords	hit_norm;
+	t_color		color;
 }	t_ray;
 
 // events.c
@@ -132,12 +137,17 @@ int			call_terminate(t_data *data);
 // ----- DRAWING -----
 
 void		set_camera(t_cam *cam);
-void		draw_rays(t_data *data);
+void		drawing(t_data *data);
+
+// drawing/ray.c
+t_ray		create_ray(t_cam cam, double x, double y);
+int			get_ray_color(t_data *data, t_ray *ray);
 
 // drawing/vectors.c
 t_coords	v_norm(t_coords v);
 t_coords	v_scale(t_coords v, double scale);
 double		v_dot(t_coords v, t_coords u);
+double		v_square(t_coords v);
 t_coords	v_oper(t_coords v, t_coords u, t_oper mode);
 
 // drawing/pixel_put.c

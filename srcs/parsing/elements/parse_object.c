@@ -14,7 +14,7 @@
 
 int	parse_object(t_data *data, char **content)
 {
-	data->obj_index++;
+	data->obj_nbr++;
 	if (!ft_strcmp(content[0], "sp"))
 		return (parse_sphere(data, content));
 	else if (!ft_strcmp(content[0], "pl"))

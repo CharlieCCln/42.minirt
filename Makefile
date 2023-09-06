@@ -47,7 +47,10 @@ SRC			=	main.c \
 				parsing/utils/parse_coords.c \
 				parsing/utils/parse_filename.c \
 				parsing/utils/remove_endl.c \
+				drawing/pixel_put.c \
 				ray.c \
+				camera.c \
+				drawing/drawing.c \
 				vectors.c
 
 OBJ_DIR		=	objs/

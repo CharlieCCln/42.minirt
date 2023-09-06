@@ -20,18 +20,18 @@ int	parse_plane(t_data *data, char **content)
 		print_error("Plane : too much data");
 	if (!content[1] || !content[2] || !content[3] || content[4])
 		return (1);
-	data->objects[data->obj_index].type = PLANE;
-	if (parse_coords(&data->objects[data->obj_index].coords, content[1]))
+	data->objects[data->obj_nbr].type = PLANE;
+	if (parse_coords(&data->objects[data->obj_nbr].coords, content[1]))
 	{
 		print_error("Plane : incorrect coordinates format or value");
 		return (1);
 	}
-	if (parse_vector(&data->objects[data->obj_index].vector, content[2]))
+	if (parse_vector(&data->objects[data->obj_nbr].vector, content[2]))
 	{
 		print_error("Plane : incorrect vector format or value");
 		return (1);
 	}
-	if (parse_color(&data->objects[data->obj_index].color, content[3]))
+	if (parse_color(&data->objects[data->obj_nbr].color, content[3]))
 	{
 		print_error("Plane : incorrect color format or value");
 		return (1);

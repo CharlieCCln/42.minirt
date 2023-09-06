@@ -38,12 +38,12 @@ int	parse_camera(t_data *data, char **content)
 		print_error("Camera : too much data");
 	if (!content[1] || !content[2] || !content[3] || content[4])
 		return (1);
-	if (parse_coords(&data->cam.coords, content[1]))
+	if (parse_coords(&data->cam.origin, content[1]))
 	{
 		print_error("Camera : incorrect coordinates format or value");
 		return (1);
 	}
-	if (parse_vector(&data->cam.vector, content[2]))
+	if (parse_vector(&data->cam.dir, content[2]))
 	{
 		print_error("Camera : incorrect vector format or value");
 		return (1);

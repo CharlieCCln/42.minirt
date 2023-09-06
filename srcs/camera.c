@@ -7,7 +7,7 @@
 */
 void	get_low_left_corner_pos(t_cam *cam, t_coords z_axis)
 {
-	cam->ll_corner = v_oper(cam->ori, v_scale(cam->hor_fov, 0.5), SUB);
+	cam->ll_corner = v_oper(cam->origin, v_scale(cam->hor_fov, 0.5), SUB);
 	cam->ll_corner = v_oper(cam->ll_corner, v_scale(cam->ver_fov, 0.5), SUB);
 	cam->ll_corner = v_oper(cam->ll_corner, z_axis, SUB);
 }
@@ -18,9 +18,8 @@ void	get_low_left_corner_pos(t_cam *cam, t_coords z_axis)
 	3/4 - Calculating viewport height, and then width using aspect ratio.
 	5 - Normalizing camera vector.
 */
-double *calculating_viewport(t_cam *cam) 
+void	calculating_viewport(t_cam *cam, double viewport[2]) 
 {
-	double		viewport[2];
 	double		theta;
 	double		aspect_ratio;
 
@@ -29,21 +28,18 @@ double *calculating_viewport(t_cam *cam)
 	viewport[X] = 2 * tan(theta / 2);
 	viewport[Y] = viewport[X] * aspect_ratio;
 	cam->dir_norm = v_norm(cam->dir);
-	return (viewport);
 }
 
 // Calculating axis : depth, horizontal and vertical.
-t_coords *calculating_axis(t_cam *cam) 
-{
-	t_coords
-	
+void	calculating_axis(t_cam *cam, t_coords axis[3]) 
+{	
 	axis[Z] = v_norm(v_scale(cam->dir_norm, -1));
 	axis[X] = v_oper((t_coords){0, 1, 0}, axis[Z], CROSS);
 	axis[Y] = v_oper(axis[Z], axis[X], CROSS);
 }
 
 // Calculating horizontal and vertical FOV thanks to the axis.
-void    calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
+void    calculating_fov(t_cam *cam, double viewport[2], t_coords axis[3])
 {
     cam->hor_fov = v_scale(axis[X], viewport[X]);
 	cam->ver_fov = v_scale(axis[Z], viewport[Y]);
@@ -58,11 +54,11 @@ void    calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
 */
 void	set_camera(t_cam *cam)
 {
-	double      *viewport;
-	t_coords    *axis;
+	double      viewport[2];
+	t_coords    axis[3];
 	
-	viewport = calculating_viewports(cam);
-	axis = calculating_axis(cam);
-	calculating_axis_fov(cam, axis, viewport);
+	calculating_viewport(cam, viewport);
+	calculating_axis(cam);
+	calculating_fov(cam, viewport, axis);
 	get_low_left_corner_pos(cam, axis[Z]);
 }

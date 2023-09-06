@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	parsing_hub(&data, argv[1]);
 	init_mlx(&data);
 	set_camera(&data.cam);
-	// draw_rays(&data);
+	drawing(&data);
 	mlx_loop(data.mlx.mlx_ptr);
 	terminate(&data);
 	return (0);

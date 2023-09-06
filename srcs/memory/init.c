@@ -55,11 +55,11 @@ void	bzero_everything(t_data *data)
 	ft_bzero(&data->mlx, sizeof(t_mlx));
 	ft_bzero(&data->ambient.color, sizeof(t_color));
 	ft_bzero(&data->ambient, sizeof(t_ambient));
-	ft_bzero(&data->cam.coords, sizeof(t_coords));
-	ft_bzero(&data->cam.vector, sizeof(t_coords));
+	ft_bzero(&data->cam.origin, sizeof(t_coords));
+	ft_bzero(&data->cam.dir, sizeof(t_coords));
 	ft_bzero(&data->cam, sizeof(t_cam));
 	ft_bzero(&data->light.coords, sizeof(t_coords));
 	ft_bzero(&data->light, sizeof(t_light));
 	data->objects = NULL;
-	data->obj_index = -1;
+	data->obj_nbr = -1;
 }

@@ -12,13 +12,16 @@
 
 #include "minirt.h"
 
+double	v_square(t_coords v)
+{
+	return (v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
 t_coords	v_norm(t_coords v)
 {
-	double	v_len_sqr;
 	double	v_len;
 
-	v_len_sqr = v.x * v.x + v.y * v.y + v.z * v.z;
-	v_len = sqrt(v_len_sqr);
+	v_len = sqrt(v_square(v));
 	return (v_scale(v, 1 / v_len));
 }
 
