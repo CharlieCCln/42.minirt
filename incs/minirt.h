@@ -6,7 +6,7 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/06 13:13:58 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/09/06 13:28:59 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_cam
 {
 	t_coords	ori;
 	t_coords	dir;
-	t_coords	v_norm;
+	t_coords	dir_norm;
 	t_coords	hor_fov;
 	t_coords	ver_fov;
 	t_coords	ll_corner;
