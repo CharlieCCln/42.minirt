@@ -130,6 +130,7 @@ t_ray	create_ray(t_cam cam, double x, double y)
 
 	ray.origin = cam.origin;
 	ray.dir = v_oper(v_scale(cam.hor_fov, x), v_scale(cam.ver_fov, y), ADD);
+	// printf("x = %f y = %f z = %f\n", ray.dir.x, ray.dir.y, ray.dir.z);
 	ray.dir = v_oper(ray.dir, cam.ll_corner, ADD);
 	ray.dir = v_norm(v_oper(ray.dir, ray.origin, SUB));
 	return (ray);

@@ -39,7 +39,7 @@ void	calculating_axis(t_cam *cam, t_coords *axis)
 }
 
 // Calculating horizontal and vertical FOV thanks to the axis.
-void    calculating_fov(t_cam *cam, double viewport[2], t_coords axis[3])
+void    calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
 {
     cam->hor_fov = v_scale(axis[X], viewport[X]);
 	cam->ver_fov = v_scale(axis[Z], viewport[Y]);
@@ -57,8 +57,19 @@ void	set_camera(t_cam *cam)
 	double      viewport[2];
 	t_coords    axis[3];
 	
-	calculating_viewports(cam, viewport);
-	calculating_axis(cam, axis);
-	calculating_axis_fov(cam, axis, viewport);
+	// calculating_viewport(cam, viewport);
+	// calculating_axis(cam, axis);
+	double		theta;
+	double		aspect_ratio;
+
+	theta = (M_PI / 180) * cam->fov;
+	aspect_ratio = WIDTH / HEIGHT;
+	viewport[X] = 2 * tan(theta / 2);
+	viewport[Y] = viewport[X] * aspect_ratio;
+	cam->dir_norm = v_norm(cam->dir);
+	axis[Z] = v_norm(v_scale(cam->dir_norm, -1));
+	axis[X] = v_oper((t_coords){0, 1, 0}, axis[Z], CROSS);
+	axis[Y] = v_oper(axis[Z], axis[X], CROSS);
+	calculating_fov(cam, viewport, axis);
 	get_low_left_corner_pos(cam, axis[Z]);
 }

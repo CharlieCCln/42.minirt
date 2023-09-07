@@ -22,6 +22,8 @@ t_coords	v_norm(t_coords v)
 	double	v_len;
 
 	v_len = sqrt(v_square(v));
+	if (v_len == 0)
+		v_len = 0.000001;
 	return (v_scale(v, 1 / v_len));
 }
 
