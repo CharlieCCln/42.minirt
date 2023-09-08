@@ -42,7 +42,7 @@ void	calculating_axis(t_cam *cam, t_coords *axis)
 void    calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
 {
     cam->hor_fov = v_scale(axis[X], viewport[X]);
-	cam->ver_fov = v_scale(axis[Z], viewport[Y]);
+	cam->ver_fov = v_scale(axis[Y], viewport[Y]);
 }
 
 /*	
