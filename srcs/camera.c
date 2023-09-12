@@ -63,7 +63,7 @@ void	set_camera(t_cam *cam)
 	double		aspect_ratio;
 
 	theta = (M_PI / 180) * cam->fov;
-	aspect_ratio = WIDTH / HEIGHT;
+	aspect_ratio = (double)HEIGHT / WIDTH;
 	viewport[X] = 2 * tan(theta / 2);
 	viewport[Y] = viewport[X] * aspect_ratio;
 	cam->dir_norm = v_norm(cam->dir);

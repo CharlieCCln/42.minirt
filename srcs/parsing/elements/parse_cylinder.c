@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cylinder.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: charlie <charlie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 14:30:03 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/03 16:23:41 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:09:13 by charlie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ static int	_parse_cylinder_size(t_data *data, char **content)
 
 static int	_parse_cylinder_coords_vector(t_data *data, char **content)
 {
-	if (parse_coords(&data->objects[data->obj_nbr].coords, content[1]))
+	if (parse_coords(&data->objects[data->obj_nbr].origin, content[1]))
 	{
 		print_error("Cylinder : incorrect coordinates format or value");
 		return (1);
 	}
-	if (parse_vector(&data->objects[data->obj_nbr].vector, content[2]))
+	if (parse_vector(&data->objects[data->obj_nbr].dir, content[2]))
 	{
 		print_error("Cylinder : incorrect vector format or value");
 		return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sphere.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: charlie <charlie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 14:30:48 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/03 14:30:55 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:08:56 by charlie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	parse_sphere(t_data *data, char **content)
 	if (!content[1] || !content[2] || !content[3] || content[4])
 		return (1);
 	data->objects[data->obj_nbr].type = SPHERE;
-	if (parse_coords(&data->objects[data->obj_nbr].coords, content[1]))
+	if (parse_coords(&data->objects[data->obj_nbr].origin, content[1]))
 	{
 		print_error("Sphere : incorrect coordinates format or value");
 		return (1);

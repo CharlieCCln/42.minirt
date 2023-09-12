@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+         #
+#    By: charlie <charlie@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:33:09 by ccrottie          #+#    #+#              #
-#    Updated: 2023/09/06 11:32:11 by ccrottie         ###   ########.fr        #
+#    Updated: 2023/09/12 14:43:14 by charlie          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,8 @@ SRC			=	main.c \
 				ray.c \
 				camera.c \
 				drawing/drawing.c \
+				sphere.c \
+				plane.c \
 				vectors.c
 
 OBJ_DIR		=	objs/

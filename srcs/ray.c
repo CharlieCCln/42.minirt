@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: charlie <charlie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:15:08 by cgelin            #+#    #+#             */
-/*   Updated: 2023/09/06 14:57:22 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/09/12 15:26:34 by charlie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,49 +15,6 @@
 t_coords	get_hit_point(t_ray *ray)
 {
 	return (v_oper(ray->origin, v_scale(ray->dir, ray->dist), ADD));
-}
-
-int	check_nearest_sphere_hit(t_ray *ray, t_object *sphere, double hit_dist)
-{
-	if (ray->dist > hit_dist)
-	{
-		ray->dist = hit_dist;
-		ray->hit = get_hit_point(ray);
-		ray->hit_norm = v_norm(v_oper(ray->hit, sphere->coords, SUB));
-		ray->color = sphere->color;
-		return (1);
-	}
-	return (0);
-}
-
-int	get_sphere_hit(t_ray *ray, t_object *sphere, t_coords dist, double *res)
-{
-	double	a;
-	double	b;
-	double	c;
-	double	delta;
-
-	a = v_square(ray->dir);
-	b = 2 * v_dot(ray->dir, dist);
-	c = v_dot(dist, dist) - \
-		((sphere->diameter / 2) * (sphere->diameter / 2));
-	delta = (b * b) - (4 * a * c);
-	if (delta < 0)
-		return (0);
-	*res = (-b - sqrt(delta)) / (2 * a);
-	return (1);
-}
-
-int	intersect_sphere(t_ray *ray, t_object *sphere)
-{
-	t_coords	dist;
-	double		hit_dist;
-
-	hit_dist = 0;
-	dist = v_oper(ray->origin, sphere->coords, SUB);
-	if (!get_sphere_hit(ray, sphere, dist, &hit_dist))
-		return (0);
-	return (check_nearest_sphere_hit(ray, sphere, hit_dist));
 }
 
 int	find_intersect(t_data *data, t_ray *ray)
@@ -72,8 +29,8 @@ int	find_intersect(t_data *data, t_ray *ray)
 	{
 		if (data->objects[i].type == SPHERE)
 			ret += intersect_sphere(ray, &data->objects[i]);
-		// else if (data->objects[i].type == PLANE)
-		// 	ret += intersect_plane(data, ray, &data->objects[i]);
+		else if (data->objects[i].type == PLANE)
+			ret += intersect_plane(ray, &data->objects[i]);
 		// else
 		// 	ret += intersect_cylinder(data, ray, &data->objects[i]);
 		i++;

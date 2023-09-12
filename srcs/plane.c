@@ -3,45 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: charlie <charlie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:55:16 by colas             #+#    #+#             */
-/*   Updated: 2023/09/11 19:12:05 by colas            ###   ########.fr       */
+/*   Updated: 2023/09/12 15:30:42 by charlie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../incs/minirt.h"
 
-int	intersect_plane(t_ray *ray, t_object *plane)
+static int	_check_nearest_plane_hit(t_ray *ray, t_object *plane, \
+	double hit_dist)
 {
-	t_coords	dist;
-	double		hit_dist;
-
-	hit_dist = 0;
-	dist = v_oper(ray->origin, plane->coords, SUB);
-	if (!get_plane_hit(ray, plane, dist, &hit_dist))
-		return (0);
-	return (check_nearest_plane_hit(ray, plane, hit_dist));
-}
-
-int		get_plane_hit(t_ray *ray, t_object *plane, t_coords dist, double *hit_dist)
-{
-	double	time;
-	double	den;
-
-	den = v_dot(v_norm(ray->dir), plane->normal);
-	if (!den)
-		return (0);
-	time = v_dot(v_oper(plane->coords, ray->origin, SUB), plane->normal) / den;
-	if (ray->hit.time > time && time > EPSILON)
+	if (ray->dist > hit_dist && hit_dist > EPSILON)
 	{
-		ray->hit.time = time;
-		ray->hit.point = get_hit_point(*ray);
-		if (v_dot(ray->dir, plane->normal) > 0)
-			plane->normal = v_scale(plane->normal, -1);
-		ray->normal = plane->normal;
+		ray->dist = hit_dist;
+		ray->hit = get_hit_point(ray);
+		if (v_dot(ray->dir, plane->dir) > 0)
+			plane->dir = v_scale(plane->dir, -1);
+		ray->hit_norm = plane->dir;
 		ray->color = plane->color;
 		return (1);
 	}
 	return (0);
+}
+
+static int	_get_plane_hit(t_ray *ray, t_object *plane, double *hit_dist)
+{
+	double	dot;
+
+	dot = v_dot(v_norm(ray->dir), plane->dir);
+	if (!dot)
+		return (0);
+	*hit_dist = v_dot(v_oper(plane->origin, ray->origin, SUB), \
+		plane->dir) / dot;
+	return (1);
+}
+
+int	intersect_plane(t_ray *ray, t_object *plane)
+{
+	double		hit_dist;
+
+	hit_dist = 0;
+	if (!_get_plane_hit(ray, plane, &hit_dist))
+		return (0);
+	return (_check_nearest_plane_hit(ray, plane, hit_dist));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: charlie <charlie@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/06 13:28:59 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/09/12 15:08:09 by charlie          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <limits.h>
 # include "float.h"
 
-//# define M_PI 3.14159265358979332384626433832795028841971693993751058209749445923078164062862089986280348253421170679
+//# define M_PI 3.14159265358979332384626433832795028841971693993751058
 # define KEY_ESC 65307
 # define WIDTH 1280
 # define HEIGHT 720
@@ -93,15 +93,15 @@ typedef struct s_cam
 
 typedef struct s_light
 {
-	t_coords	coords;
+	t_coords	origin;
 	double		intensity;
 }	t_light;
 
 typedef struct s_object
 {
 	t_type		type;
-	t_coords	coords;
-	t_coords	vector;
+	t_coords	origin;
+	t_coords	dir;
 	t_color		color;
 	double		diameter;
 	double		height;
@@ -142,6 +142,7 @@ void		drawing(t_data *data);
 // drawing/ray.c
 t_ray		create_ray(t_cam cam, double x, double y);
 int			get_ray_color(t_data *data, t_ray *ray);
+t_coords	get_hit_point(t_ray *ray);
 
 // drawing/vectors.c
 t_coords	v_norm(t_coords v);
@@ -152,6 +153,12 @@ t_coords	v_oper(t_coords v, t_coords u, t_oper mode);
 
 // drawing/pixel_put.c
 void		pixel_put(t_mlx *mlx, int x, int y, int color);
+
+// sphere.c
+int			intersect_sphere(t_ray *ray, t_object *sphere);
+
+// plane.c
+int			intersect_plane(t_ray *ray, t_object *plane);
 
 // ----- PARSING -----
 
