@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: charlie <charlie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/12 15:08:09 by charlie          ###   ########.fr       */
+/*   Updated: 2023/09/13 09:40:50 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,8 @@ void		set_camera(t_cam *cam);
 void		drawing(t_data *data);
 
 // drawing/ray.c
-t_ray		create_ray(t_cam cam, double x, double y);
+int 		find_intersect(t_data *data, t_ray *ray);
+t_ray 		create_ray(t_cam cam, double x, double y);
 int			get_ray_color(t_data *data, t_ray *ray);
 t_coords	get_hit_point(t_ray *ray);
 
@@ -159,6 +160,9 @@ int			intersect_sphere(t_ray *ray, t_object *sphere);
 
 // plane.c
 int			intersect_plane(t_ray *ray, t_object *plane);
+
+// color.c
+int			get_ray_color(t_data *data, t_ray *ray);
 
 // ----- PARSING -----
 

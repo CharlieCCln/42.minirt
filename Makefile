@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: charlie <charlie@student.42.fr>            +#+  +:+       +#+         #
+#    By: colas <colas@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:33:09 by ccrottie          #+#    #+#              #
-#    Updated: 2023/09/12 14:43:14 by charlie          ###   ########.fr        #
+#    Updated: 2023/09/13 10:00:03 by colas            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ SRC			=	main.c \
 				drawing/drawing.c \
 				sphere.c \
 				plane.c \
-				vectors.c
+				vectors.c \
+				color.c
 
 OBJ_DIR		=	objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)
