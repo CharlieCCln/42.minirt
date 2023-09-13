@@ -6,7 +6,7 @@
 /*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/13 09:40:50 by colas            ###   ########.fr       */
+/*   Updated: 2023/09/13 20:11:25 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,9 @@ t_coords	v_oper(t_coords v, t_coords u, t_oper mode);
 void		pixel_put(t_mlx *mlx, int x, int y, int color);
 
 // sphere.c
-int			intersect_sphere(t_ray *ray, t_object *sphere);
+int get_sphere_hit(t_ray *ray, t_object *sphere, 
+t_coords dist, double *hit_dist);
+int intersect_sphere(t_ray *ray, t_object *sphere);
 
 // plane.c
 int			intersect_plane(t_ray *ray, t_object *plane);

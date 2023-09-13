@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: charlie <charlie@student.42.fr>            +#+  +:+       +#+        */
+/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:37:50 by charlie           #+#    #+#             */
-/*   Updated: 2023/09/12 15:14:56 by charlie          ###   ########.fr       */
+/*   Updated: 2023/09/13 18:59:04 by colas            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	_check_nearest_sphere_hit(t_ray *ray, t_object *sphere, \
 	return (0);
 }
 
-static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
+int	get_sphere_hit(t_ray *ray, t_object *sphere, \
 	t_coords dist, double *hit_dist)
 {
 	double	a;
@@ -52,7 +52,7 @@ int	intersect_sphere(t_ray *ray, t_object *sphere)
 
 	hit_dist = 0;
 	dist = v_oper(ray->origin, sphere->origin, SUB);
-	if (!_get_sphere_hit(ray, sphere, dist, &hit_dist))
+	if (!get_sphere_hit(ray, sphere, dist, &hit_dist))
 		return (0);
 	return (_check_nearest_sphere_hit(ray, sphere, hit_dist));
 }
