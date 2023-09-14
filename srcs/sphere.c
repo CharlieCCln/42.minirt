@@ -33,6 +33,7 @@ static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
 	double	b;
 	double	c;
 	double	delta;
+	double	test;
 
 	a = v_square(ray->dir);
 	b = 2 * v_dot(ray->dir, dist);
@@ -42,6 +43,9 @@ static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
 	if (delta < 0)
 		return (0);
 	*hit_dist = (-b - sqrt(delta)) / (2 * a);
+	test = (-b + sqrt(delta)) / (2 * a);
+	if (test < *hit_dist)
+		*hit_dist = test;
 	return (1);
 }
 

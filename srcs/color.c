@@ -12,6 +12,16 @@
 
 #include "minirt.h"
 
+static int	check_rgb(int nbr)
+{
+	if (nbr > 0xFF)
+		return (0xFF);
+	else if (nbr < 0)
+		return (0);
+	else
+		return (nbr);
+}
+
 /*
 	This function multiplies color of the object by ambient light to get the final color.
 	Each resulting component(r, g, b) is calculated by isolating each component of 
@@ -44,9 +54,9 @@ static int	_color_scale(int color, double intensity)
 {
 	t_color	temp;
 
-	temp.r = (color >> 16) * intensity;
-	temp.g = ((color >> 8) & 255) * intensity;
-	temp.b = (color & 255) * intensity;
+	temp.r = check_rgb((color >> 16) * intensity);
+	temp.g = check_rgb(((color >> 8) & 255) * intensity);
+	temp.b = check_rgb((color & 255) * intensity);
 	return ((temp.r << 16) | (temp.g << 8) | temp.b);
 }
 
@@ -57,6 +67,16 @@ int	check_shadow(t_data *data, t_ray *ray)
 	shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, 0.0000001));
 	shadow.dir = v_norm(v_oper(SUB, data->light.origin, shadow.origin));
 	return (find_intersect(data, &shadow));
+}
+
+int			color_add(int c1, int c2)
+{
+	t_color	temp;
+
+	temp.r = check_rgb((c1 >> 16) + (c2 >> 16));
+	temp.g = check_rgb((c1 >> 8 & 255) + (c2 >> 8 & 255));
+	temp.b = check_rgb((c1 & 255) + (c2 & 255));
+	return ((temp.r << 16) | (temp.g << 8) | temp.b);
 }
 
 int	add_light(t_light *light, t_ray *ray)
@@ -73,19 +93,7 @@ int	add_light(t_light *light, t_ray *ray)
 		light_bright = 0;
 	else
 		light_bright = (light->intensity * gain * 1000) / (4.0 * M_PI * r2);
-	return (_color_product(_color_scale(ray->color.hex, light_bright), 0xFFFFFF));
-}
-
-int			color_add(int c1, int c2)
-{
-	int		r;
-	int		g;
-	int		b;
-
-	r = (c1 >> 16) + (c2 >> 16);
-	g = (c1 >> 8 & 255) + (c2 >> 8 & 255);
-	b = (c1 & 255) + (c2 & 255);
-	return ((r << 16) | (g << 8) | b);
+	return (_color_product(color_add(10, _color_scale(ray->color.hex, light_bright)), 0xFFFFFF));
 }
 
 int	get_ray_color(t_data *data, t_ray *ray)
