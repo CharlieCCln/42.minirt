@@ -50,15 +50,55 @@ static int	_color_scale(int color, double intensity)
 	return ((temp.r << 16) | (temp.g << 8) | temp.b);
 }
 
+int	check_shadow(t_data *data, t_ray *ray)
+{
+	t_ray	shadow;
+
+	shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, 0.0000001));
+	shadow.dir = v_norm(v_oper(SUB, data->light.origin, shadow.origin));
+	return (find_intersect(data, &shadow));
+}
+
+int	add_light(t_light *light, t_ray *ray)
+{
+	t_coords	light_normal;
+	float		gain;
+	float		r2;
+	float		light_bright;
+
+	light_normal = v_oper(SUB, light->origin, ray->hit);
+	r2 = v_square(light_normal);
+	gain = v_dot(v_norm(light_normal), ray->hit_norm);
+	if (gain <= 0)
+		light_bright = 0;
+	else
+		light_bright = (light->intensity * gain * 1000) / (4.0 * M_PI * r2);
+	return (_color_product(_color_scale(ray->color.hex, light_bright), 0xFFFFFF));
+}
+
+int			color_add(int c1, int c2)
+{
+	int		r;
+	int		g;
+	int		b;
+
+	r = (c1 >> 16) + (c2 >> 16);
+	g = (c1 >> 8 & 255) + (c2 >> 8 & 255);
+	b = (c1 & 255) + (c2 & 255);
+	return ((r << 16) | (g << 8) | b);
+}
+
 int	get_ray_color(t_data *data, t_ray *ray)
 {
-	int	ambient;
-	int	color;
+	int		ambient;
+	int		color;
+	int		shadow;
 
 	if (!find_intersect(data, ray))
 		return (0);
 	ambient = _color_scale(data->ambient.color.hex, data->ambient.intensity);
 	color = _color_product(ray->color.hex, ambient);
-	// add_light
+	shadow = !check_shadow(data, ray);
+	color = color_add(color, shadow * add_light(&data->light, ray));
 	return (color);
 }

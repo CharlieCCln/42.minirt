@@ -17,7 +17,7 @@ static void	_draw_this_pixel(t_data *data, int x, int y)
 	t_ray	ray;
 
 	ray = create_ray(data->cam, (double)x / WIDTH, (double)y / HEIGHT);
-	pixel_put(&data->mlx, x, y, get_ray_color(data, &ray));
+	pixel_put(&data->mlx, x, HEIGHT - y, get_ray_color(data, &ray));
 }
 
 void	drawing(t_data *data)

@@ -12,13 +12,24 @@
 
 #include "minirt.h"
 
-/* static void		bhaskara(double a, double b, double c, double *res)
+static int	_check_nearest_cylinder_hit(t_ray *ray, \
+	t_object *cylinder, double hit_dist)
 {
-	double		sqrt_discriminant;
+	double		dist;
+	t_coords	cyl2ray;
 
-	sqrt_discriminant = sqrt(pow(b, 2) - 4 * a * c);
-	*res = (-b - sqrt_discriminant) / (2 * a);
-} */
+	cyl2ray = v_oper(SUB, cylinder->origin, ray->origin);
+	dist = v_dot(cylinder->dir, v_oper(SUB, v_scale(ray->dir, hit_dist), cyl2ray));
+	if ((dist >= 0 && dist <= cylinder->height) && ray->dist > hit_dist)
+	{
+		ray->dist = hit_dist;
+		ray->hit = get_hit_point(ray);
+		ray->hit_norm = v_norm(v_oper(SUB, ray->hit,
+								v_oper(ADD, v_scale(cylinder->dir, dist), cylinder->origin)));
+		ray->color = cylinder->color;
+	}
+	return ((dist >= 0 && dist <= cylinder->height));
+}
 
 static void	_get_cylinder_vectors(t_coords *vectors, t_ray *ray, \
 	t_object *cylinder, t_coords dist)
@@ -30,8 +41,8 @@ static void	_get_cylinder_vectors(t_coords *vectors, t_ray *ray, \
 		vectors[1]);
 }
 
-static int	_get_cylinder_hit(t_ray *ray, t_object *cylinder, \
-	t_coords dist, double *hit_dist)
+static double	_get_cylinder_hit(t_ray *ray, t_object *cylinder, \
+	t_coords dist)
 {
 	double		a;
 	double		b;
@@ -45,70 +56,14 @@ static int	_get_cylinder_hit(t_ray *ray, t_object *cylinder, \
 	c = v_square(vectors[1]) - \
 		(cylinder->diameter / 2) * (cylinder->diameter / 2);
 	delta = (b * b) - (4 * a * c);
-	*hit_dist = (-b - sqrt(delta)) / (2 * a);
-	return (1);
-}
-
-static double	cy_calc(t_ray *ray, t_object *cy, double *y, bool *ret)
-{
-	t_coords	v_cy2ray;
-	double		time;
-	double		dist;
-
-	_get_cylinder_hit(ray, cy, v_oper(SUB, ray->origin, cy->origin), &time);
-	v_cy2ray = v_oper(SUB, cy->origin, ray->origin);
-	dist = v_dot(cy->dir, v_oper(SUB, v_scale(ray->dir, time), v_cy2ray));
-	*ret = (dist >= 0 && dist <= cy->height);
-	*y = dist;
-	return (time);
-}
-
-/* static int	_check_nearest_cylinder_hit(t_ray *ray, t_object *cylinder, \
-	double dist, double hit_dist)
-{
-	if (ray->dist > hit_dist)
-	{
-		ray->dist = hit_dist;
-		ray->hit = get_hit_point(ray);
-		ray->hit_norm = v_norm(v_oper(SUB, ray->hit,
-								v_oper(ADD, v_scale(cylinder->dir, dist), cylinder->origin)));
-		ray->color = cylinder->color;
-		return (1);
-	}
-	return (0);
+	return ((-b - sqrt(delta)) / (2 * a));
 }
 
 int	intersect_cylinder(t_ray *ray, t_object *cylinder)
 {
-	t_coords	ray2cyl;
-	t_coords	cyl2ray;
-	double		dist;
 	double		hit_dist;
 
-	ray2cyl = v_oper(SUB, ray->origin, cylinder->origin);
-	if (!_get_cylinder_hit(ray, cylinder, ray2cyl, &hit_dist))
-		return (0);
-	cyl2ray = v_oper(SUB, cylinder->origin, ray->origin);
-	dist = v_dot(cylinder->dir, v_oper(SUB, v_scale(ray->dir, hit_dist), cyl2ray));
-	if (dist < 0 || dist > cylinder->height)
-		return (0);
-	return (_check_nearest_cylinder_hit(ray, cylinder, hit_dist, dist));
-} */
-
-int	intersect_cylinder(t_ray *ray, t_object *cylinder)
-{
-	bool		ret;
-	double		time;
-	double		y;
-
-	time = cy_calc(ray, cylinder, &y, &ret);
-	if (ret && ray->dist > time)
-	{
-		ray->dist = time;
-		ray->hit = get_hit_point(ray);
-		ray->hit_norm = v_norm(v_oper(SUB, ray->hit,
-								v_oper(ADD, v_scale(cylinder->dir, y), cylinder->origin)));
-		ray->color = cylinder->color;
-	}
-	return (ret);
+	hit_dist = _get_cylinder_hit(ray, cylinder, \
+		v_oper(SUB, ray->origin, cylinder->origin));
+	return (_check_nearest_cylinder_hit(ray, cylinder, hit_dist));
 }
