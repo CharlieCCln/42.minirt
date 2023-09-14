@@ -22,6 +22,7 @@
 # include <unistd.h> // read, write, close
 # include <stdio.h> // perror, printf
 # include <limits.h>
+# include <stdbool.h>
 # include "float.h"
 
 //# define M_PI 3.14159265358979332384626433832795028841971693993751058
@@ -150,18 +151,19 @@ t_coords	v_norm(t_coords v);
 t_coords	v_scale(t_coords v, double scale);
 double		v_dot(t_coords v, t_coords u);
 double		v_square(t_coords v);
-t_coords	v_oper(t_coords v, t_coords u, t_oper mode);
+t_coords	v_oper(t_oper mode, t_coords v, t_coords u);
 
 // drawing/pixel_put.c
 void		pixel_put(t_mlx *mlx, int x, int y, int color);
 
 // sphere.c
-int get_sphere_hit(t_ray *ray, t_object *sphere, 
-t_coords dist, double *hit_dist);
-int intersect_sphere(t_ray *ray, t_object *sphere);
+int			intersect_sphere(t_ray *ray, t_object *sphere);
 
 // plane.c
 int			intersect_plane(t_ray *ray, t_object *plane);
+
+// cylinder.c
+int			intersect_cylinder(t_ray *ray, t_object *cylinder);
 
 // color.c
 int			get_ray_color(t_data *data, t_ray *ray);

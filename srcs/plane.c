@@ -35,7 +35,7 @@ static int	_get_plane_hit(t_ray *ray, t_object *plane, double *hit_dist)
 	dot = v_dot(v_norm(ray->dir), plane->dir);
 	if (!dot)
 		return (0);
-	*hit_dist = v_dot(v_oper(plane->origin, ray->origin, SUB), \
+	*hit_dist = v_dot(v_oper(SUB, plane->origin, ray->origin), \
 		plane->dir) / dot;
 	return (1);
 }

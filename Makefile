@@ -53,6 +53,7 @@ SRC			=	main.c \
 				drawing/drawing.c \
 				sphere.c \
 				plane.c \
+				cylinder.c \
 				vectors.c \
 				color.c
 

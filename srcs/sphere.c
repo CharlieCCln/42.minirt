@@ -19,14 +19,14 @@ static int	_check_nearest_sphere_hit(t_ray *ray, t_object *sphere, \
 	{
 		ray->dist = hit_dist;
 		ray->hit = get_hit_point(ray);
-		ray->hit_norm = v_norm(v_oper(ray->hit, sphere->origin, SUB));
+		ray->hit_norm = v_norm(v_oper(SUB, ray->hit, sphere->origin));
 		ray->color = sphere->color;
 		return (1);
 	}
 	return (0);
 }
 
-int	get_sphere_hit(t_ray *ray, t_object *sphere, \
+static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
 	t_coords dist, double *hit_dist)
 {
 	double	a;
@@ -51,8 +51,8 @@ int	intersect_sphere(t_ray *ray, t_object *sphere)
 	double		hit_dist;
 
 	hit_dist = 0;
-	dist = v_oper(ray->origin, sphere->origin, SUB);
-	if (!get_sphere_hit(ray, sphere, dist, &hit_dist))
+	dist = v_oper(SUB, ray->origin, sphere->origin);
+	if (!_get_sphere_hit(ray, sphere, dist, &hit_dist))
 		return (0);
 	return (_check_nearest_sphere_hit(ray, sphere, hit_dist));
 }
