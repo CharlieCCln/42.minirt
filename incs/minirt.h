@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/13 20:11:25 by colas            ###   ########.fr       */
+/*   Updated: 2023/09/18 11:54:40 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,15 @@ int			intersect_plane(t_ray *ray, t_object *plane);
 // cylinder.c
 int			intersect_cylinder(t_ray *ray, t_object *cylinder);
 
-// color.c
+// light.c
 int			get_ray_color(t_data *data, t_ray *ray);
+
+// color.c
+int			color_add(int c1, int c2);
+int	color_scale(int color, double intensity);
+int	color_product(int color1, int color2);
+
+
 
 // ----- PARSING -----
 
