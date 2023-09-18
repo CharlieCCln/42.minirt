@@ -23,8 +23,8 @@ static int	_check_nearest_cylinder_hit(t_ray *ray, t_object *cy, \
 		if (in_cy[0] == false && in_cy[1] == true)
 			ray->hit_norm = v_scale(ray->hit_norm, -1);
 		else
-			ray->hit_norm = v_norm(v_oper(SUB, ray->hit,
-								v_oper(ADD, v_scale(cy->dir, solutions[1]), cy->origin)));
+			ray->hit_norm = v_norm(v_oper(SUB, ray->hit, \
+				v_oper(ADD, v_scale(cy->dir, solutions[1]), cy->origin)));
 		ray->color = cy->color;
 	}
 	return (in_cy[0] || in_cy[1]);

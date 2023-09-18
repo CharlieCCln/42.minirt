@@ -23,7 +23,8 @@ static int	_check_rgb(int nbr)
 }
 
 /*
-	This function multiplies color of the object by ambient light to get the final color.
+	This function multiplies color of the object by ambient light
+	to get the final color.
 	Each resulting component(r, g, b) is calculated by isolating each component of 
 	color1 from the 2 others, normalising it by dividing it by 255, 
 	multiplying it by the same component (normalised) in color2 and then
@@ -60,8 +61,7 @@ int	color_scale(int color, double intensity)
 	return ((temp.r << 16) | (temp.g << 8) | temp.b);
 }
 
-
-int			color_add(int c1, int c2)
+int	color_add(int c1, int c2)
 {
 	t_color	temp;
 
@@ -70,4 +70,3 @@ int			color_add(int c1, int c2)
 	temp.b = _check_rgb((c1 & 255) + (c2 & 255));
 	return ((temp.r << 16) | (temp.g << 8) | temp.b);
 }
-

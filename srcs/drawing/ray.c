@@ -45,9 +45,9 @@ int	find_intersect(t_data *data, t_ray *ray)
 3 - Substracting the ray direction by the ray origin so the origin of the ray is
 	camera relative then normalising it to make it simpler for calculations.
 */
-t_ray	create_ray(t_cam cam, double x, double y) 
+t_ray	create_ray(t_cam cam, double x, double y)
 {
-	t_ray ray;
+	t_ray	ray;
 
 	ray.origin = cam.origin;
 	ray.dir = v_oper(ADD, v_scale(cam.hor_fov, x), v_scale(cam.ver_fov, y));
