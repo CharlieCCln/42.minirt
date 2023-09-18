@@ -11,10 +11,12 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+
 /*
 	This function garantees that the entered color will fit the
 	hexadecimal range of color by caping it between 0 and 255.
 */
+
 static int	_check_rgb(int nbr)
 {
 	if (nbr > 255)

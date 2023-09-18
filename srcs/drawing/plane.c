@@ -11,12 +11,14 @@
 /* ************************************************************************** */
 
 #include "../incs/minirt.h"
+
 /*
-	This function checks wether the calculated point is the closest 
+	This function checks whether the calculated point is the closest 
 	object hit to the camera. If so, we assign the hit information to the ray.
-	If the dot product of the ray direction and the plane direction is greater than zero,
-	it means the ray is approaching the plane from the same side as the normal vector of the plane
-	so we have to negate the plane direction to get the right orientation of the plane.
+	If the dot product of the ray direction and the plane direction is greater 
+	than zero, it means the ray is approaching the plane from the same side as 
+	the normal vector of the plane so we have to negate the plane direction 
+	to get the right orientation of the plane.
 */
 
 static int	_check_nearest_plane_hit(t_ray *ray, t_object *plane, \
@@ -36,9 +38,10 @@ static int	_check_nearest_plane_hit(t_ray *ray, t_object *plane, \
 }
 
 /*
-	Firstly we check if the ray is parallel to the plane by checking the dot product of
-	the direction of the ray and the plane. Then we calculate the hit distance from the camera
-	and assign it to the hit_dist variable.
+	Firstly we check if the ray is parallel to the plane by checking 
+	the dot product of the direction of the ray and the plane. 
+	Then we calculate the hit distance from the camera and assign it 
+	to the hit_dist variable.
 */
 
 static int	_get_plane_hit(t_ray *ray, t_object *plane, double *hit_dist)

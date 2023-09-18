@@ -11,11 +11,13 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+
 /*
 	This function is used during the calculation of the 3 types of objects,
 	it adds to the ray origin the length of the ray times its direction, this
 	gets the point where the objects is hit by the ray. 
 */
+
 t_coords	get_hit_point(t_ray *ray)
 {
 	return (v_oper(ADD, ray->origin, v_scale(ray->dir, ray->dist)));
@@ -26,6 +28,7 @@ t_coords	get_hit_point(t_ray *ray)
 	by calling the appropriate function. If nothing is hit,
 	the function returns 0.
 */
+
 int	find_intersect(t_data *data, t_ray *ray)
 {
 	int	i;
@@ -54,6 +57,7 @@ int	find_intersect(t_data *data, t_ray *ray)
 3 - Substracting the ray direction by the ray origin so the origin of the ray is
 	camera relative then normalising it to make it simpler for calculations.
 */
+
 t_ray	create_ray(t_cam cam, double x, double y)
 {
 	t_ray	ray;

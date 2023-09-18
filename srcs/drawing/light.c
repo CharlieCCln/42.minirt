@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minirt.h"
+
 /*
 	This function checks if we have to render a shadow at the given point.
 	The shadow will be a ray that has for origin the hit slightly offset to
@@ -20,6 +21,7 @@
 	Then we check if our shadow ray hits an object with find_intersect previously
 	used for rendering objects.
 */
+
 int	check_shadow(t_data *data, t_ray *ray)
 {
 	t_ray	shadow;
@@ -42,6 +44,7 @@ int	check_shadow(t_data *data, t_ray *ray)
 	light, adding a constant to get a minimum light brightness and multiplying
 	it by white to get a maximum light brightness.
 */
+
 int	add_light(t_light *light, t_ray *ray)
 {
 	t_coords	light_normal;
