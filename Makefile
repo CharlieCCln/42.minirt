@@ -48,15 +48,15 @@ SRC			=	main.c \
 				parsing/utils/parse_filename.c \
 				parsing/utils/remove_endl.c \
 				drawing/pixel_put.c \
-				ray.c \
-				camera.c \
+				drawing/ray.c \
+				drawing/camera.c \
 				drawing/drawing.c \
-				sphere.c \
-				plane.c \
-				cylinder.c \
-				vectors.c \
-				color.c \
-				light.c
+				drawing/sphere.c \
+				drawing/plane.c \
+				drawing/cylinder.c \
+				drawing/vectors.c \
+				drawing/color_utils.c \
+				drawing/light.c
 
 OBJ_DIR		=	objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)

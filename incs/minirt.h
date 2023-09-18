@@ -166,12 +166,13 @@ int			intersect_plane(t_ray *ray, t_object *plane);
 int			intersect_cylinder(t_ray *ray, t_object *cylinder);
 
 // light.c
-int			get_ray_color(t_data *data, t_ray *ray);
+int			add_light(t_light *light, t_ray *ray);
+int			check_shadow(t_data *data, t_ray *ray);
 
 // color.c
 int			color_add(int c1, int c2);
-int	color_scale(int color, double intensity);
-int	color_product(int color1, int color2);
+int			color_scale(int color, double intensity);
+int			color_product(int color1, int color2);
 
 
 

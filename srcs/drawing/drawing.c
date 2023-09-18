@@ -12,12 +12,27 @@
 
 #include "minirt.h"
 
+static int	_get_ray_color(t_data *data, t_ray *ray)
+{
+	int		ambient;
+	int		color;
+	int		shadow;
+
+	if (!find_intersect(data, ray))
+		return (0);
+	ambient = color_scale(data->ambient.color.hex, data->ambient.intensity);
+	color = color_product(ray->color.hex, ambient);
+	shadow = !check_shadow(data, ray);
+	color = color_add(color, shadow * add_light(&data->light, ray));
+	return (color);
+}
+
 static void	_draw_this_pixel(t_data *data, int x, int y)
 {
 	t_ray	ray;
 
 	ray = create_ray(data->cam, (double)x / WIDTH, (double)y / HEIGHT);
-	pixel_put(&data->mlx, x, HEIGHT - y, get_ray_color(data, &ray));
+	pixel_put(&data->mlx, x, HEIGHT - y, _get_ray_color(data, &ray));
 }
 
 void	drawing(t_data *data)
