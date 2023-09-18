@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   camera.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/18 15:17:49 by cgelin            #+#    #+#             */
+/*   Updated: 2023/09/18 15:19:06 by cgelin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 /*
@@ -31,7 +43,7 @@ void	calculating_viewport(t_cam *cam, double *viewport)
 }
 
 // Calculating axis : depth, horizontal and vertical.
-void	calculating_axis(t_cam *cam, t_coords *axis) 
+void	calculating_axis(t_cam *cam, t_coords *axis)
 {
 	axis[Z] = v_norm(v_scale(cam->dir_norm, -1));
 	axis[X] = v_oper(CROSS, (t_coords){0, 1, 0}, axis[Z]);
@@ -39,9 +51,9 @@ void	calculating_axis(t_cam *cam, t_coords *axis)
 }
 
 // Calculating horizontal and vertical FOV thanks to the axis.
-void    calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
+void	calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
 {
-    cam->hor_fov = v_scale(axis[X], viewport[X]);
+	cam->hor_fov = v_scale(axis[X], viewport[X]);
 	cam->ver_fov = v_scale(axis[Y], viewport[Y]);
 }
 
@@ -49,14 +61,15 @@ void    calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
     This function allows us to calculate and setup camera data.
 	That will help us to trace rays later.
    
-	The information stored in the camera structure are horizontal and vertical fov values
-    aswell as low left corner position to facilitate calculations.
+	The information stored in the camera structure are horizontal 
+	and vertical fov values aswell as low left corner 
+	position to facilitate calculations.
 */
 void	set_camera(t_cam *cam)
 {
-	double      viewport[2];
-	t_coords    axis[3];
-	
+	double		viewport[2];
+	t_coords	axis[3];
+
 	calculating_viewport(cam, viewport);
 	calculating_axis(cam, axis);
 	calculating_fov(cam, viewport, axis);
