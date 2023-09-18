@@ -24,7 +24,7 @@ void	calculating_viewport(t_cam *cam, double *viewport)
 	double		aspect_ratio;
 
 	theta = (M_PI / 180) * cam->fov;
-	aspect_ratio = WIDTH / HEIGHT;
+	aspect_ratio = (double)HEIGHT / WIDTH;
 	viewport[X] = 2 * tan(theta / 2);
 	viewport[Y] = viewport[X] * aspect_ratio;
 	cam->dir_norm = v_norm(cam->dir);
@@ -57,19 +57,8 @@ void	set_camera(t_cam *cam)
 	double      viewport[2];
 	t_coords    axis[3];
 	
-	// calculating_viewport(cam, viewport);
-	// calculating_axis(cam, axis);
-	double		theta;
-	double		aspect_ratio;
-
-	theta = (M_PI / 180) * cam->fov;
-	aspect_ratio = (double)HEIGHT / WIDTH;
-	viewport[X] = 2 * tan(theta / 2);
-	viewport[Y] = viewport[X] * aspect_ratio;
-	cam->dir_norm = v_norm(cam->dir);
-	axis[Z] = v_norm(v_scale(cam->dir_norm, -1));
-	axis[X] = v_oper(CROSS, (t_coords){0, 1, 0}, axis[Z]);
-	axis[Y] = v_oper(CROSS, axis[Z], axis[X]);
+	calculating_viewport(cam, viewport);
+	calculating_axis(cam, axis);
 	calculating_fov(cam, viewport, axis);
 	get_low_left_corner_pos(cam, axis[Z]);
 }
