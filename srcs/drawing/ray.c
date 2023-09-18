@@ -3,20 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:15:08 by cgelin            #+#    #+#             */
-/*   Updated: 2023/09/13 09:37:23 by colas            ###   ########.fr       */
+/*   Updated: 2023/09/18 16:18:33 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
+/*
+	This function is used during the calculation of the 3 types of objects,
+	it adds to the ray origin the length of the ray times its direction, this
+	gets the point where the objects is hit by the ray. 
+*/
 t_coords	get_hit_point(t_ray *ray)
 {
 	return (v_oper(ADD, ray->origin, v_scale(ray->dir, ray->dist)));
 }
 
+/*
+	For each item, we are going to calculate the rays that hits them
+	by calling the appropriate function. If nothing is hit,
+	the function returns 0.
+*/
 int	find_intersect(t_data *data, t_ray *ray)
 {
 	int	i;

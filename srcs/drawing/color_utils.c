@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 09:37:12 by colas             #+#    #+#             */
-/*   Updated: 2023/09/18 11:53:39 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/09/18 16:11:51 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
+/*
+	This function garantees that the entered color will fit the
+	hexadecimal range of color by caping it between 0 and 255.
+*/
 static int	_check_rgb(int nbr)
 {
-	if (nbr > 0xFF)
-		return (0xFF);
+	if (nbr > 255)
+		return (255);
 	else if (nbr < 0)
 		return (0);
 	else
@@ -60,6 +63,11 @@ int	color_scale(int color, double intensity)
 	temp.b = _check_rgb((color & 255) * intensity);
 	return ((temp.r << 16) | (temp.g << 8) | temp.b);
 }
+
+/*
+	This function adds the rgb components of two colors 
+	following the same process as above, except it adds them.
+*/
 
 int	color_add(int c1, int c2)
 {
