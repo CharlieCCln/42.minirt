@@ -12,6 +12,13 @@
 
 #include "minirt.h"
 
+/*
+	This function is a homemade alternative to mlx_pixel_put, that works
+	directly with the image address. It casts the address onto an int array,
+	and that allows us to directly give the color (also an int) to the right
+	pixel using "dst[y * WIDTH + x] = color".
+*/
+
 void	pixel_put(t_mlx *mlx, int x, int y, int color)
 {
 	int	*dst;

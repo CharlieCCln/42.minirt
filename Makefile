@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: colas <colas@student.42.fr>                +#+  +:+       +#+         #
+#    By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/24 14:33:09 by ccrottie          #+#    #+#              #
-#    Updated: 2023/09/13 10:00:03 by colas            ###   ########.fr        #
+#    Updated: 2023/09/18 11:55:27 by cgelin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,14 +47,16 @@ SRC			=	main.c \
 				parsing/utils/parse_coords.c \
 				parsing/utils/parse_filename.c \
 				parsing/utils/remove_endl.c \
-				drawing/pixel_put.c \
-				ray.c \
-				camera.c \
+				drawing/camera.c \
+				drawing/color_utils.c \
+				drawing/cylinder.c \
 				drawing/drawing.c \
-				sphere.c \
-				plane.c \
-				vectors.c \
-				color.c
+				drawing/light.c \
+				drawing/pixel_put.c \
+				drawing/plane.c \
+				drawing/ray.c \
+				drawing/sphere.c \
+				drawing/vectors.c
 
 OBJ_DIR		=	objs/
 OBJ			=	$(SRC:%.c=$(OBJ_DIR)%.o)

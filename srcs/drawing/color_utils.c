@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   color.c                                            :+:      :+:    :+:   */
+/*   color_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 09:37:12 by colas             #+#    #+#             */
-/*   Updated: 2023/09/13 09:59:03 by colas            ###   ########.fr       */
+/*   Updated: 2023/09/18 16:11:51 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 /*
-	This function multiplies color of the object by ambient light to get the final color.
+	This function garantees that the entered color will fit the
+	hexadecimal range of color by caping it between 0 and 255.
+*/
+
+static int	_check_rgb(int nbr)
+{
+	if (nbr > 255)
+		return (255);
+	else if (nbr < 0)
+		return (0);
+	else
+		return (nbr);
+}
+
+/*
+	This function multiplies color of the object by ambient light
+	to get the final color.
 	Each resulting component(r, g, b) is calculated by isolating each component of 
 	color1 from the 2 others, normalising it by dividing it by 255, 
 	multiplying it by the same component (normalised) in color2 and then
 	de-normalising the result by multiplying it by 255.
 */
 
-static int	_color_product(int color1, int color2)
+int	color_product(int color1, int color2)
 {
 	t_color	temp;
 
@@ -40,25 +56,27 @@ static int	_color_product(int color1, int color2)
 	before regrouping them to create the resulting color.
 */
 
-static int	_color_scale(int color, double intensity)
+int	color_scale(int color, double intensity)
 {
 	t_color	temp;
 
-	temp.r = (color >> 16) * intensity;
-	temp.g = ((color >> 8) & 255) * intensity;
-	temp.b = (color & 255) * intensity;
+	temp.r = _check_rgb((color >> 16) * intensity);
+	temp.g = _check_rgb(((color >> 8) & 255) * intensity);
+	temp.b = _check_rgb((color & 255) * intensity);
 	return ((temp.r << 16) | (temp.g << 8) | temp.b);
 }
 
-int	get_ray_color(t_data *data, t_ray *ray)
-{
-	int	ambient;
-	int	color;
+/*
+	This function adds the rgb components of two colors 
+	following the same process as above, except it adds them.
+*/
 
-	if (!find_intersect(data, ray))
-		return (0);
-	ambient = _color_scale(data->ambient.color.hex, data->ambient.intensity);
-	color = _color_product(ray->color.hex, ambient);
-	// add_light
-	return (color);
+int	color_add(int c1, int c2)
+{
+	t_color	temp;
+
+	temp.r = _check_rgb((c1 >> 16) + (c2 >> 16));
+	temp.g = _check_rgb((c1 >> 8 & 255) + (c2 >> 8 & 255));
+	temp.b = _check_rgb((c1 & 255) + (c2 & 255));
+	return ((temp.r << 16) | (temp.g << 8) | temp.b);
 }
