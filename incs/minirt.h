@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: colas <colas@student.42.fr>                +#+  +:+       +#+        */
+/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/13 20:11:25 by colas            ###   ########.fr       */
+/*   Updated: 2023/09/21 18:19:31 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 # include <unistd.h> // read, write, close
 # include <stdio.h> // perror, printf
 # include <limits.h>
+# include <stdbool.h>
 # include "float.h"
 
-//# define M_PI 3.14159265358979332384626433832795028841971693993751058
 # define KEY_ESC 65307
 # define WIDTH 1280
 # define HEIGHT 720
@@ -32,6 +32,20 @@
 # define Y 1
 # define Z 2
 # define EPSILON 0.00001
+
+typedef enum e_type
+{
+	SPHERE,
+	PLANE,
+	CYLINDER
+}	t_type;
+
+typedef enum e_oper
+{
+	ADD,
+	SUB,
+	CROSS,
+}	t_oper;
 
 typedef struct s_mlx
 {
@@ -59,20 +73,6 @@ typedef struct s_coords
 	double		y;
 	double		z;
 }	t_coords;
-
-typedef enum e_type
-{
-	SPHERE,
-	PLANE,
-	CYLINDER
-}	t_type;
-
-typedef enum e_oper
-{
-	ADD,
-	SUB,
-	CROSS,
-}	t_oper;
 
 typedef struct s_ambient
 {
@@ -127,6 +127,7 @@ typedef struct s_ray
 	t_coords	hit;
 	t_coords	hit_norm;
 	t_color		color;
+	int			inside;
 }	t_ray;
 
 // events.c
@@ -136,35 +137,45 @@ int			call_terminate(t_data *data);
 
 // ----- DRAWING -----
 
+// drawing/camera.c
 void		set_camera(t_cam *cam);
+
+// drawing/color_utils.c
+int			color_add(int c1, int c2);
+int			color_scale(int color, double intensity);
+int			color_product(int color1, int color2);
+
+// drawing/cylinder.c
+int			intersect_cylinder(t_ray *ray, t_object *cylinder);
+
+// drawing/drawing.c
 void		drawing(t_data *data);
 
+// drawing/light.c
+int			add_light(t_light *light, t_ray *ray);
+int			check_shadow(t_data *data, t_ray *ray);
+
+// drawing/pixel_put.c
+void		pixel_put(t_mlx *mlx, int x, int y, int color);
+
+// drawing/plane.c
+int			intersect_plane(t_ray *ray, t_object *plane);
+
 // drawing/ray.c
-int 		find_intersect(t_data *data, t_ray *ray);
-t_ray 		create_ray(t_cam cam, double x, double y);
+int			find_intersect(t_data *data, t_ray *ray);
+t_ray		create_ray(t_cam cam, double x, double y);
 int			get_ray_color(t_data *data, t_ray *ray);
 t_coords	get_hit_point(t_ray *ray);
+
+// drawing/sphere.c
+int			intersect_sphere(t_ray *ray, t_object *sphere);
 
 // drawing/vectors.c
 t_coords	v_norm(t_coords v);
 t_coords	v_scale(t_coords v, double scale);
 double		v_dot(t_coords v, t_coords u);
 double		v_square(t_coords v);
-t_coords	v_oper(t_coords v, t_coords u, t_oper mode);
-
-// drawing/pixel_put.c
-void		pixel_put(t_mlx *mlx, int x, int y, int color);
-
-// sphere.c
-int get_sphere_hit(t_ray *ray, t_object *sphere, 
-t_coords dist, double *hit_dist);
-int intersect_sphere(t_ray *ray, t_object *sphere);
-
-// plane.c
-int			intersect_plane(t_ray *ray, t_object *plane);
-
-// color.c
-int			get_ray_color(t_data *data, t_ray *ray);
+t_coords	v_oper(t_oper mode, t_coords v, t_coords u);
 
 // ----- PARSING -----
 
