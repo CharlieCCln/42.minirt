@@ -6,7 +6,7 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/18 11:54:40 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/09/21 18:19:31 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct s_ray
 	t_coords	hit;
 	t_coords	hit_norm;
 	t_color		color;
+	int			inside;
 }	t_ray;
 
 // events.c

@@ -6,7 +6,7 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 14:37:50 by charlie           #+#    #+#             */
-/*   Updated: 2023/09/18 13:33:36 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/09/21 18:41:13 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,20 @@
 
 static int	_check_nearest_sphere_hit(t_ray *ray, t_object *sphere, \
 	double hit_dist)
-{
+{	
 	if (ray->dist > hit_dist && hit_dist > EPSILON)
 	{
 		ray->dist = hit_dist;
 		ray->hit = get_hit_point(ray);
 		ray->hit_norm = v_norm(v_oper(SUB, ray->hit, sphere->origin));
+		ray->color = sphere->color;
+		return (1);
+	}
+	else
+	{
+		ray->dist = hit_dist;
+		ray->hit = get_hit_point(ray);
+		ray->hit_norm = v_scale(v_norm(v_oper(SUB, ray->hit, sphere->origin)), -1);
 		ray->color = sphere->color;
 		return (1);
 	}
@@ -53,6 +61,7 @@ static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
 	double	b;
 	double	c;
 	double	delta;
+	double	is_inside;
 
 	a = v_square(ray->dir);
 	b = 2 * v_dot(ray->dir, dist);
@@ -62,6 +71,14 @@ static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
 	if (delta < 0)
 		return (0);
 	*hit_dist = (-b - sqrt(delta)) / (2 * a);
+	is_inside = (-b + sqrt(delta)) / (2 * a);
+	if (is_inside >= 0 && *hit_dist < 0)
+	{
+		*hit_dist = is_inside;
+		ray->inside = 1;
+	}
+	else
+		ray->inside = 0;
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/30 10:15:08 by cgelin            #+#    #+#             */
-/*   Updated: 2023/09/18 16:18:33 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/09/21 12:58:17 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,6 @@ t_ray	create_ray(t_cam cam, double x, double y)
 	ray.dir = v_oper(ADD, v_scale(cam.hor_fov, x), v_scale(cam.ver_fov, y));
 	ray.dir = v_oper(ADD, ray.dir, cam.ll_corner);
 	ray.dir = v_norm(v_oper(SUB, ray.dir, ray.origin));
+	ray.inside = 0;
 	return (ray);
 }

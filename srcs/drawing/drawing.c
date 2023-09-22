@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   drawing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 14:57:12 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/06 14:57:24 by ccrottie         ###   ########.fr       */
+/*   Updated: 2023/09/21 18:20:24 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	_draw_this_pixel(t_data *data, int x, int y)
 	t_ray	ray;
 
 	ray = create_ray(data->cam, (double)x / WIDTH, (double)y / HEIGHT);
-	pixel_put(&data->mlx, x, HEIGHT - y, _get_ray_color(data, &ray));
+	pixel_put(&data->mlx, WIDTH - x, HEIGHT - y, _get_ray_color(data, &ray));
 }
 
 void	drawing(t_data *data)

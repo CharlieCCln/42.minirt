@@ -6,7 +6,7 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 11:51:23 by cgelin            #+#    #+#             */
-/*   Updated: 2023/09/18 17:03:19 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/09/21 18:39:08 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,16 @@
 	used for rendering objects.
 */
 
-int	check_shadow(t_data *data, t_ray *ray)
+int check_shadow(t_data *data, t_ray *ray)
 {
-	t_ray	shadow;
+    t_ray shadow;
 
-	shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, 0.0000001));
-	shadow.dir = v_norm(v_oper(SUB, data->light.origin, shadow.origin));
-	return (find_intersect(data, &shadow));
+    if (!ray->inside)
+        shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, EPSILON));	
+    else 
+        shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, (EPSILON * -1)));
+    shadow.dir = v_norm(v_oper(SUB, data->light.origin, shadow.origin));
+    return (!find_intersect(data, &shadow));
 }
 
 /*
@@ -48,13 +51,19 @@ int	check_shadow(t_data *data, t_ray *ray)
 int	add_light(t_light *light, t_ray *ray)
 {
 	t_coords	light_normal;
-	float		gain;
-	float		r2;
-	float		light_bright;
+	double		gain;
+	double		r2;
+	double		light_bright;
 
+	
 	light_normal = v_oper(SUB, light->origin, ray->hit);
 	r2 = v_square(light_normal);
 	gain = v_dot(v_norm(light_normal), ray->hit_norm);
+	if (ray->inside)
+    {
+        light_normal = v_scale(light_normal, -1);
+        gain = -gain;
+    }
 	if (gain <= 0)
 		light_bright = 0;
 	else
