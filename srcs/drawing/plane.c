@@ -32,6 +32,7 @@ static int	_check_nearest_plane_hit(t_ray *ray, t_object *plane, \
 			plane->dir = v_scale(plane->dir, -1);
 		ray->hit_norm = plane->dir;
 		ray->color = plane->color;
+		ray->inside = 0;
 		return (1);
 	}
 	return (0);
@@ -61,10 +62,11 @@ static int	_get_plane_hit(t_ray *ray, t_object *plane, double *hit_dist)
 	hits the plane and checks which object is the closest if there are multiple.
 */
 
-int	intersect_plane(t_ray *ray, t_object *plane)
+int	intersect_plane(t_ray *ray, t_object *plane, int mode)
 {
 	double		hit_dist;
 
+	(void)mode;
 	hit_dist = 0;
 	if (!_get_plane_hit(ray, plane, &hit_dist))
 		return (0);

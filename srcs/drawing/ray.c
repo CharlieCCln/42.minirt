@@ -29,7 +29,7 @@ t_coords	get_hit_point(t_ray *ray)
 	the function returns 0.
 */
 
-int	find_intersect(t_data *data, t_ray *ray)
+int	find_intersect(t_data *data, t_ray *ray, int mode)
 {
 	int	i;
 	int	ret;
@@ -40,14 +40,20 @@ int	find_intersect(t_data *data, t_ray *ray)
 	while (i < data->obj_nbr + 1)
 	{
 		if (data->objects[i].type == SPHERE)
-			ret += intersect_sphere(ray, &data->objects[i]);
+			ret += intersect_sphere(ray, &data->objects[i], mode);
 		else if (data->objects[i].type == PLANE)
-			ret += intersect_plane(ray, &data->objects[i]);
+			ret += intersect_plane(ray, &data->objects[i], mode);
 		else
 			ret += intersect_cylinder(ray, &data->objects[i]);
+		if (ray->inside && !data->cam.inside)
+			data->cam.inside = 1;
 		i++;
 	}
-	return (ret);
+	// if (mode)
+	// 	printf("%f / %f / %f : %f, %f, %f\n", ray->hit_norm.x, ray->hit_norm.y, ray->hit_norm.z, ray->hit.x, ray->hit.y, ray->hit.z);
+	if (ret)
+		return (1);
+	return (0);
 }
 
 /* This fonction creates a Ray that follows the camera direction.

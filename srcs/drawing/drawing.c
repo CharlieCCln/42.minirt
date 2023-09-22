@@ -18,12 +18,14 @@ static int	_get_ray_color(t_data *data, t_ray *ray)
 	int		color;
 	int		shadow;
 
-	if (!find_intersect(data, ray))
+	if (!find_intersect(data, ray, 0))
 		return (0);
+	// printf("%f / %f / %f : %f, %f, %f\n", ray->hit_norm.x, ray->hit_norm.y, ray->hit_norm.z, ray->hit.x, ray->hit.y, ray->hit.z);
 	ambient = color_scale(data->ambient.color.hex, data->ambient.intensity);
 	color = color_product(ray->color.hex, ambient);
-	shadow = !check_shadow(data, ray);
-	color = color_add(color, shadow * add_light(&data->light, ray));
+	shadow = check_shadow(data, ray);
+	color = color_add(color, shadow * add_light(data, ray));
+	// printf("%f / %f / %f : %f, %f, %f\n", ray->hit_norm.x, ray->hit_norm.y, ray->hit_norm.z, ray->hit.x, ray->hit.y, ray->hit.z);
 	return (color);
 }
 

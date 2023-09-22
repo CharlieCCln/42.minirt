@@ -26,12 +26,17 @@ int check_shadow(t_data *data, t_ray *ray)
 {
     t_ray shadow;
 
-    if (!ray->inside)
-        shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, EPSILON));	
-    else 
-        shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, (EPSILON * -1)));
-    shadow.dir = v_norm(v_oper(SUB, data->light.origin, shadow.origin));
-    return (!find_intersect(data, &shadow));
+	shadow.inside = 0;
+	if (data->cam.inside)
+	{
+		shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, EPSILON));
+		// printf("%f / %f / %f : %f, %f, %f\n", ray->hit_norm.x, ray->hit_norm.y, ray->hit_norm.z, ray->hit.x, ray->hit.y, ray->hit.z);
+		shadow.dir = v_norm(v_oper(SUB, shadow.origin, data->light.origin));
+    	return (find_intersect(data, &shadow, 1));
+	}
+	shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, EPSILON));
+	shadow.dir = v_norm(v_oper(SUB, data->light.origin, shadow.origin));
+	return (!find_intersect(data, &shadow, 1));
 }
 
 /*
@@ -48,7 +53,7 @@ int check_shadow(t_data *data, t_ray *ray)
 	it by white to get a maximum light brightness.
 */
 
-int	add_light(t_light *light, t_ray *ray)
+int	add_light(t_data *data, t_ray *ray)
 {
 	t_coords	light_normal;
 	double		gain;
@@ -56,7 +61,7 @@ int	add_light(t_light *light, t_ray *ray)
 	double		light_bright;
 
 	
-	light_normal = v_oper(SUB, light->origin, ray->hit);
+	light_normal = v_oper(SUB, data->light.origin, ray->hit);
 	r2 = v_square(light_normal);
 	gain = v_dot(v_norm(light_normal), ray->hit_norm);
 	if (ray->inside)
@@ -67,7 +72,7 @@ int	add_light(t_light *light, t_ray *ray)
 	if (gain <= 0)
 		light_bright = 0;
 	else
-		light_bright = (light->intensity * gain * 1000) / (4.0 * M_PI * r2);
+		light_bright = (data->light.intensity * gain * 1000) / (4.0 * M_PI * r2);
 	return (color_product(color_add(10, \
 		color_scale(ray->color.hex, light_bright)), 0xFFFFFF));
 }

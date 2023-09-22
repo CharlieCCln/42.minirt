@@ -89,6 +89,7 @@ typedef struct s_cam
 	t_coords	ver_fov;
 	t_coords	ll_corner;
 	int			fov;
+	int			inside;
 }	t_cam;
 
 typedef struct s_light
@@ -152,23 +153,23 @@ int			intersect_cylinder(t_ray *ray, t_object *cylinder);
 void		drawing(t_data *data);
 
 // drawing/light.c
-int			add_light(t_light *light, t_ray *ray);
+int			add_light(t_data *data, t_ray *ray);
 int			check_shadow(t_data *data, t_ray *ray);
 
 // drawing/pixel_put.c
 void		pixel_put(t_mlx *mlx, int x, int y, int color);
 
 // drawing/plane.c
-int			intersect_plane(t_ray *ray, t_object *plane);
+int			intersect_plane(t_ray *ray, t_object *plane, int mode);
 
 // drawing/ray.c
-int			find_intersect(t_data *data, t_ray *ray);
+int			find_intersect(t_data *data, t_ray *ray, int mode);
 t_ray		create_ray(t_cam cam, double x, double y);
 int			get_ray_color(t_data *data, t_ray *ray);
 t_coords	get_hit_point(t_ray *ray);
 
 // drawing/sphere.c
-int			intersect_sphere(t_ray *ray, t_object *sphere);
+int			intersect_sphere(t_ray *ray, t_object *sphere, int mode);
 
 // drawing/vectors.c
 t_coords	v_norm(t_coords v);
