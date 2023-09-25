@@ -89,7 +89,6 @@ typedef struct s_cam
 	t_coords	ver_fov;
 	t_coords	ll_corner;
 	int			fov;
-	int			inside;
 }	t_cam;
 
 typedef struct s_light

@@ -28,10 +28,8 @@ static int	_check_nearest_sphere_hit(t_ray *ray, t_object *sphere, \
 		ray->dist = hit_dist;
 		ray->hit = get_hit_point(ray);
 		ray->hit_norm = v_norm(v_oper(SUB, ray->hit, sphere->origin));
-		// printf("%f / %f / %f\n", ray->hit_norm.x, ray->hit_norm.y, ray->hit_norm.z);
-		// if (ray->inside)
-		// 	ray->hit_norm = v_scale(ray->hit_norm, -1);
-		// printf("////\n%f / %f / %f\n", ray->hit_norm.x, ray->hit_norm.y, ray->hit_norm.z);
+		if (v_dot(ray->dir, ray->hit_norm) > 0)
+			ray->hit_norm = v_scale(ray->hit_norm, -1);
 		ray->color = sphere->color;
 		return (1);
 	}
@@ -50,32 +48,24 @@ static int	_check_nearest_sphere_hit(t_ray *ray, t_object *sphere, \
 	closest hit that matters for our camera.
 */
 
-// static int	_get_sphere_shadow_hit(t_ray *ray, t_object *sphere, \
-// 	t_coords dist, double *hit_dist)
-// {
-// 	double	a;
-// 	double	b;
-// 	double	c;
-// 	double	delta;
-// 	double	is_inside;
+static int	_get_sphere_shadow_hit(t_ray *ray, t_object *sphere, \
+	t_coords dist, double *hit_dist)
+{
+	double	a;
+	double	b;
+	double	c;
+	double	delta;
 
-// 	a = v_square(ray->dir);
-// 	b = 2 * v_dot(ray->dir, dist);
-// 	c = v_dot(dist, dist) - \
-// 		((sphere->diameter / 2) * (sphere->diameter / 2));
-// 	delta = (b * b) - (4 * a * c);
-// 	if (delta < 0)
-// 		return (0);
-// 	*hit_dist = (-b - sqrt(delta)) / (2 * a);
-// 	is_inside = (-b + sqrt(delta)) / (2 * a);
-// 	if (is_inside >= 0 && *hit_dist < 0)
-// 	{
-// 		ray->inside = 1;
-// 		return (1);
-// 	}
-// 	ray->inside = 0;
-// 	return (1);
-// }
+	a = v_square(ray->dir);
+	b = 2 * v_dot(ray->dir, dist);
+	c = v_dot(dist, dist) - \
+		((sphere->diameter / 2) * (sphere->diameter / 2));
+	delta = (b * b) - (4 * a * c);
+	if (delta < 0)
+		return (0);
+	*hit_dist = (-b - sqrt(delta)) / (2 * a);
+	return (1);
+}
 
 static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
 	t_coords dist, double *hit_dist)
@@ -96,12 +86,7 @@ static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
 	*hit_dist = (-b - sqrt(delta)) / (2 * a);
 	is_inside = (-b + sqrt(delta)) / (2 * a);
 	if (is_inside >= 0 && *hit_dist < 0)
-	{
 		*hit_dist = is_inside;
-		ray->inside = 1;
-	}
-	else
-		ray->inside = 0;
 	return (1);
 }
 
@@ -117,12 +102,11 @@ int	intersect_sphere(t_ray *ray, t_object *sphere, int mode)
 	t_coords	dist;
 	double		hit_dist;
 
-	(void)mode;
 	hit_dist = 0;
 	dist = v_oper(SUB, ray->origin, sphere->origin);
 	if (!_get_sphere_hit(ray, sphere, dist, &hit_dist))
 		return (0);
-	// if (mode && !_get_sphere_shadow_hit(ray, sphere, dist, &hit_dist))
-	// 	return (0);
+	else if (mode && !_get_sphere_shadow_hit(ray, sphere, dist, &hit_dist))
+		return (0);
 	return (_check_nearest_sphere_hit(ray, sphere, hit_dist));
 }

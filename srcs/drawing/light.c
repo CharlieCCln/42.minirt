@@ -18,25 +18,20 @@
 	avoid self-intersection.
 	The direction of the ray bounced is determined by substracting
 	the origin of the light with our previous calculated origin of shadow.
-	Then we check if our shadow ray hits an object with find_intersect previously
-	used for rendering objects.
+	Then we check if our shadow ray hits an object with find_intersect 
+	previously used for rendering objects.
 */
 
 int check_shadow(t_data *data, t_ray *ray)
 {
-    t_ray shadow;
+    t_ray	shadow;
+	int		ret;
 
 	shadow.inside = 0;
-	if (data->cam.inside)
-	{
-		shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, EPSILON));
-		// printf("%f / %f / %f : %f, %f, %f\n", ray->hit_norm.x, ray->hit_norm.y, ray->hit_norm.z, ray->hit.x, ray->hit.y, ray->hit.z);
-		shadow.dir = v_norm(v_oper(SUB, shadow.origin, data->light.origin));
-    	return (find_intersect(data, &shadow, 1));
-	}
 	shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, EPSILON));
 	shadow.dir = v_norm(v_oper(SUB, data->light.origin, shadow.origin));
-	return (!find_intersect(data, &shadow, 1));
+	ret = find_intersect(data, &shadow, 1);
+	return (!ret);
 }
 
 /*
@@ -64,11 +59,8 @@ int	add_light(t_data *data, t_ray *ray)
 	light_normal = v_oper(SUB, data->light.origin, ray->hit);
 	r2 = v_square(light_normal);
 	gain = v_dot(v_norm(light_normal), ray->hit_norm);
-	if (ray->inside)
-    {
-        light_normal = v_scale(light_normal, -1);
-        gain = -gain;
-    }
+	// if (ray->inside)
+    //     gain = -gain;
 	if (gain <= 0)
 		light_bright = 0;
 	else

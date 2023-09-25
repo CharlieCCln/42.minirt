@@ -45,12 +45,8 @@ int	find_intersect(t_data *data, t_ray *ray, int mode)
 			ret += intersect_plane(ray, &data->objects[i], mode);
 		else
 			ret += intersect_cylinder(ray, &data->objects[i]);
-		if (ray->inside && !data->cam.inside)
-			data->cam.inside = 1;
 		i++;
 	}
-	// if (mode)
-	// 	printf("%f / %f / %f : %f, %f, %f\n", ray->hit_norm.x, ray->hit_norm.y, ray->hit_norm.z, ray->hit.x, ray->hit.y, ray->hit.z);
 	if (ret)
 		return (1);
 	return (0);
