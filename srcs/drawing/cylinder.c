@@ -22,7 +22,7 @@
 	to calculate this hit normal.
 */
 
-static int	_check_nearest_cylinder_hit(t_ray *ray, t_object *cy, \
+/* static int	_check_nearest_cylinder_hit(t_ray *ray, t_object *cy, \
 	double solutions[2], bool in_cy[2])
 {
 	if ((in_cy[0] || in_cy[1]) && ray->dist > solutions[0] && \
@@ -40,7 +40,7 @@ static int	_check_nearest_cylinder_hit(t_ray *ray, t_object *cy, \
 		ray->color = cy->color;
 	}
 	return (in_cy[0] || in_cy[1]);
-}
+} */
 
 /*
 	This function checks how our ray intersects with the cylinder.
@@ -54,7 +54,7 @@ static int	_check_nearest_cylinder_hit(t_ray *ray, t_object *cy, \
 	and replace the other one with the origin-to-hit distance value.
 */
 
-static void	_check_cylinder_solutions(t_ray *ray, t_object *cy, \
+/* static void	_check_cylinder_solutions(t_ray *ray, t_object *cy, \
 	double solutions[2], bool in_cy[2])
 {
 	t_coords	cyl2ray;
@@ -76,7 +76,11 @@ static void	_check_cylinder_solutions(t_ray *ray, t_object *cy, \
 	}
 	else
 		solutions[1] = ori2inter[0];
-}
+	if (in_cy[0] == true && solutions[0] <= EPSILON)
+		in_cy[0] = false;
+	if (in_cy[1] == true && solutions[1] <= EPSILON)
+		in_cy[1] = false;
+} */
 
 /*
 	This function calculates the potential position of the hit on the cylinder.
@@ -89,7 +93,7 @@ static void	_check_cylinder_solutions(t_ray *ray, t_object *cy, \
 	in order to know how our ray intersects the cylinder.
 */
 
-static void	_cylinder_equation(t_coords vectors[2], \
+/* static void	_cylinder_equation(t_coords vectors[2], \
 	t_object *cy, double solutions[2])
 {
 	double		a;
@@ -103,7 +107,7 @@ static void	_cylinder_equation(t_coords vectors[2], \
 	delta = (b * b) - (4 * a * c);
 	solutions[0] = (-b - sqrt(delta)) / (2 * a);
 	solutions[1] = (-b + sqrt(delta)) / (2 * a);
-}
+} */
 
 /*
 	This function calculates two vectors, that we will need to use to get the
@@ -114,14 +118,14 @@ static void	_cylinder_equation(t_coords vectors[2], \
 		top and bottom "caps" of the cylinder.
 */
 
-static void	_get_cylinder_vectors(t_coords *vectors, t_ray *ray, t_object *cy)
+/* static void	_get_cylinder_vectors(t_coords *vectors, t_ray *ray, t_object *cy)
 {
 	vectors[0] = v_scale(cy->dir, v_dot(ray->dir, cy->dir));
 	vectors[0] = v_oper(SUB, ray->dir, vectors[0]);
 	vectors[1] = v_oper(SUB, ray->origin, cy->origin);
 	vectors[1] = v_scale(cy->dir, v_dot(vectors[1], cy->dir));
 	vectors[1] = v_oper(SUB, v_oper(SUB, ray->origin, cy->origin), vectors[1]);
-}
+} */
 
 /*
 	This function tends to find if our ray intersects with a given cylinder.
@@ -131,7 +135,7 @@ static void	_get_cylinder_vectors(t_coords *vectors, t_ray *ray, t_object *cy)
 	or behind another object.
 */
 
-int	intersect_cylinder(t_ray *ray, t_object *cy)
+/* int	intersect_cylinder(t_ray *ray, t_object *cy)
 {
 	t_coords	vectors[2];
 	double		solutions[2];
@@ -141,4 +145,104 @@ int	intersect_cylinder(t_ray *ray, t_object *cy)
 	_cylinder_equation(vectors, cy, solutions);
 	_check_cylinder_solutions(ray, cy, solutions, in_cy);
 	return (_check_nearest_cylinder_hit(ray, cy, solutions, in_cy));
+} */
+
+static bool	within_cylinder_radius(t_ray *ray, double t)
+{
+	double	x;
+	double	z;
+
+	x = ray->origin.x + ray->dir.x * t;
+	z = ray->origin.z + ray->dir.z * t;
+	if ((x * x + z * z) <= 1)
+		return (true);
+	return (false);
+}
+
+static bool	check_cylinder_caps(t_ray *ray, t_object *cy)
+{
+	bool	intersected;
+	double	t;
+
+	intersected = false;
+	if (fabs(ray->dir.y) > EPSILON)
+	{
+		t = (-(cy->height / 2) - ray->origin.y) / ray->dir.y;
+		if (within_cylinder_radius(ray, t) && ray->dist > t)
+		{
+			ray->dist = t;
+			ray->color = cy->color;
+			ray->hit = get_hit_point(ray);
+			intersected = true;
+		}
+		t = ((cy->height / 2) - ray->origin.y) / ray->dir.y;
+		if (within_cylinder_radius(ray, t) && ray->dist > t)
+		{
+			ray->dist = t;
+			ray->color = cy->color;
+			ray->hit = get_hit_point(ray);
+			intersected = true;
+		}
+	}
+	return (intersected);
+}
+
+static bool	add_cylinder_intersections(t_ray *ray,
+		t_object *cy, double *ts)
+{
+	double	y0;
+	double	y1;
+	bool	intersected;
+
+	intersected = false;
+	if (ts[0] > ts[1])
+	{
+		y0 = ts[0];
+		ts[0] = ts[1];
+		ts[1] = y0;
+	}
+	y0 = ray->origin.y + ts[0] * ray->dir.y;
+	if (y0 > (-cy->height / 2) && y0 < (cy->height / 2) && ray->dist > ts[0])
+	{
+		ray->dist = ts[0];
+		ray->color = cy->color;
+		ray->hit = get_hit_point(ray);
+		intersected = true;
+	}
+	y1 = ray->origin.y + ts[1] * ray->dir.y;
+	if (y1 > (-cy->height / 2) && y1 < (cy->height / 2) && ray->dist > ts[1])
+	{
+		ray->dist = ts[1];
+		ray->color = cy->color;
+		ray->hit = get_hit_point(ray);
+		intersected = true;
+	}
+	return (intersected);
+}
+
+int	intersect_cylinder(t_ray *ray, t_object *cylinder)
+{
+	bool	intersected;
+	double	a;
+	double	b;
+	double	ts[2];
+	double	discriminant;
+
+	intersected = check_cylinder_caps(ray, cylinder);
+	a = ray->dir.x * ray->dir.x + ray->dir.z * ray->dir.z;
+	if (fabs(a) < EPSILON)
+		return (intersected);
+	b = 2 * ray->dir.x * ray->origin.x + 2 * ray->dir.z * ray->origin.z;
+	discriminant = b * b - 4 * a * \
+		(ray->origin.x * ray->origin.x + ray->origin.z * ray->origin.z - 1);
+	if (discriminant < 0)
+		return (intersected);
+	a *= 2;
+	b *= -1;
+	discriminant = sqrt(discriminant);
+	ts[0] = (b - discriminant) / (a);
+	ts[1] = (b + discriminant) / (a);
+	if (add_cylinder_intersections(ray, cylinder, ts))
+		intersected = true;
+	return (intersected);
 }
