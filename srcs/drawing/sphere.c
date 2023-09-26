@@ -63,11 +63,11 @@ static int	_get_sphere_shadow_hit(t_ray *ray, t_object *sphere, \
 	delta = (b * b) - (4 * a * c);
 	if (delta < 0)
 		return (0);
-	*hit_dist = (-b - sqrt(delta)) / (2 * a);
+	*hit_dist = (-b - sqrtf(delta)) / (2 * a);
 	return (1);
 }
 
-static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
+static int	_sphere_equation(t_ray *ray, t_object *sphere, \
 	t_coords dist, double *hit_dist)
 {
 	double	a;
@@ -83,8 +83,8 @@ static int	_get_sphere_hit(t_ray *ray, t_object *sphere, \
 	delta = (b * b) - (4 * a * c);
 	if (delta < 0)
 		return (0);
-	*hit_dist = (-b - sqrt(delta)) / (2 * a);
-	is_inside = (-b + sqrt(delta)) / (2 * a);
+	*hit_dist = (-b - sqrtf(delta)) / (2 * a);
+	is_inside = (-b + sqrtf(delta)) / (2 * a);
 	if (is_inside >= 0 && *hit_dist < 0)
 		*hit_dist = is_inside;
 	return (1);
@@ -104,7 +104,7 @@ int	intersect_sphere(t_ray *ray, t_object *sphere, int mode)
 
 	hit_dist = 0;
 	dist = v_oper(SUB, ray->origin, sphere->origin);
-	if (!_get_sphere_hit(ray, sphere, dist, &hit_dist))
+	if (!_sphere_equation(ray, sphere, dist, &hit_dist))
 		return (0);
 	else if (mode && !_get_sphere_shadow_hit(ray, sphere, dist, &hit_dist))
 		return (0);
