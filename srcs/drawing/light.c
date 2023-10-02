@@ -27,8 +27,7 @@ int check_shadow(t_data *data, t_ray *ray)
     t_ray	shadow;
 	int		ret;
 
-	shadow.inside = 0;
-	shadow.origin = v_oper(ADD, ray->hit, v_scale(ray->hit_norm, EPSILON));
+	shadow.origin = v_oper(ADD, ray->hit, v_scale(MULT, ray->hit_norm, EPSILON));
 	shadow.dir = v_norm(v_oper(SUB, data->light.origin, shadow.origin));
 	ret = find_intersect(data, &shadow, 1);
 	return (!ret);
@@ -57,7 +56,7 @@ int	add_light(t_data *data, t_ray *ray)
 
 	
 	light_normal = v_oper(SUB, data->light.origin, ray->hit);
-	r2 = v_square(light_normal);
+	r2 = v_dot(light_normal, light_normal);
 	gain = v_dot(v_norm(light_normal), ray->hit_norm);
 	if (gain <= 0)
 		light_bright = 0;

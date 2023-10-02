@@ -29,10 +29,9 @@ static int	_check_nearest_plane_hit(t_ray *ray, t_object *plane, \
 		ray->dist = hit_dist;
 		ray->hit = get_hit_point(ray);
 		if (v_dot(ray->dir, plane->dir) > 0)
-			plane->dir = v_scale(plane->dir, -1);
+			plane->dir = v_scale(MULT, plane->dir, -1);
 		ray->hit_norm = plane->dir;
 		ray->color = plane->color;
-		ray->inside = 0;
 		return (1);
 	}
 	return (0);

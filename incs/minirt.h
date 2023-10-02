@@ -47,6 +47,12 @@ typedef enum e_oper
 	CROSS,
 }	t_oper;
 
+typedef enum e_scale
+{
+	MULT,
+	DIV,
+}	t_scale;
+
 typedef struct s_mlx
 {
 	void	*mlx_ptr;
@@ -105,8 +111,6 @@ typedef struct s_object
 	t_color		color;
 	double		diameter;
 	double		height;
-	t_coords		pos;
-	t_coords		pos2;
 }	t_object;
 
 typedef struct s_data
@@ -129,7 +133,6 @@ typedef struct s_ray
 	t_coords	hit;
 	t_coords	hit_norm;
 	t_color		color;
-	int			inside;
 }	t_ray;
 
 // events.c
@@ -149,6 +152,12 @@ int			color_product(int color1, int color2);
 
 // drawing/cylinder.c
 int			intersect_cylinder(t_ray *ray, t_object *cylinder);
+
+// drawing/cylinder_caps.c
+double 		get_caps_hit(t_ray *ray, t_object *cyl);
+
+// drawing/cylinder_side.c
+double		get_side_hit(t_ray *ray, t_object *cyl);
 
 // drawing/drawing.c
 void		drawing(t_data *data);
@@ -174,9 +183,9 @@ int			intersect_sphere(t_ray *ray, t_object *sphere, int mode);
 
 // drawing/vectors.c
 t_coords	v_norm(t_coords v);
-t_coords	v_scale(t_coords v, double scale);
+t_coords	v_scale(t_scale mode, t_coords v, double scale);
 double		v_dot(t_coords v, t_coords u);
-double		v_square(t_coords v);
+double		v_dist(t_coords v, t_coords u);
 t_coords	v_oper(t_oper mode, t_coords v, t_coords u);
 
 // ----- PARSING -----

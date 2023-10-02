@@ -50,6 +50,8 @@ SRC			=	main.c \
 				drawing/camera.c \
 				drawing/color_utils.c \
 				drawing/cylinder.c \
+				drawing/cylinder_caps.c \
+				drawing/cylinder_side.c \
 				drawing/drawing.c \
 				drawing/light.c \
 				drawing/pixel_put.c \

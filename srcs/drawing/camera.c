@@ -20,8 +20,8 @@
 
 static void	_get_low_left_corner_pos(t_cam *cam, t_coords z_axis)
 {
-	cam->ll_corner = v_oper(SUB, cam->origin, v_scale(cam->hor_fov, 0.5));
-	cam->ll_corner = v_oper(SUB, cam->ll_corner, v_scale(cam->ver_fov, 0.5));
+	cam->ll_corner = v_oper(SUB, cam->origin, v_scale(MULT, cam->hor_fov, 0.5));
+	cam->ll_corner = v_oper(SUB, cam->ll_corner, v_scale(MULT, cam->ver_fov, 0.5));
 	cam->ll_corner = v_oper(SUB, cam->ll_corner, z_axis);
 }
 
@@ -48,7 +48,7 @@ static void	_calculating_viewport(t_cam *cam, double *viewport)
 
 static void	_calculating_axis(t_cam *cam, t_coords *axis)
 {
-	axis[Z] = v_norm(v_scale(cam->dir_norm, -1));
+	axis[Z] = v_norm(v_scale(MULT, cam->dir_norm, -1));
 	axis[X] = v_oper(CROSS, (t_coords){0, 1, 0}, axis[Z]);
 	axis[Y] = v_oper(CROSS, axis[Z], axis[X]);
 }
@@ -57,8 +57,8 @@ static void	_calculating_axis(t_cam *cam, t_coords *axis)
 
 static void	_calculating_fov(t_cam *cam, double *viewport, t_coords *axis)
 {
-	cam->hor_fov = v_scale(axis[X], viewport[X]);
-	cam->ver_fov = v_scale(axis[Y], viewport[Y]);
+	cam->hor_fov = v_scale(MULT, axis[X], viewport[X]);
+	cam->ver_fov = v_scale(MULT, axis[Y], viewport[Y]);
 }
 
 /*	

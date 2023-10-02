@@ -20,7 +20,7 @@
 
 t_coords	get_hit_point(t_ray *ray)
 {
-	return (v_oper(ADD, ray->origin, v_scale(ray->dir, ray->dist)));
+	return (v_oper(ADD, ray->origin, v_scale(MULT, ray->dir, ray->dist)));
 }
 
 /*
@@ -65,9 +65,9 @@ t_ray	create_ray(t_cam cam, double x, double y)
 	t_ray	ray;
 
 	ray.origin = cam.origin;
-	ray.dir = v_oper(ADD, v_scale(cam.hor_fov, x), v_scale(cam.ver_fov, y));
+	ray.dir = v_oper(ADD, \
+		v_scale(MULT, cam.hor_fov, x), v_scale(MULT, cam.ver_fov, y));
 	ray.dir = v_oper(ADD, ray.dir, cam.ll_corner);
 	ray.dir = v_norm(v_oper(SUB, ray.dir, ray.origin));
-	ray.inside = 0;
 	return (ray);
 }

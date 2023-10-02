@@ -12,24 +12,27 @@
 
 #include "minirt.h"
 
-double	v_square(t_coords v)
+double	v_dist(t_coords v, t_coords u)
 {
-	return (v.x * v.x + v.y * v.y + v.z * v.z);
+	return (sqrtf(pow(u.x - v.x, 2) + \
+		pow(u.y - v.y, 2) + pow(u.z - v.z, 2)));
 }
 
 t_coords	v_norm(t_coords v)
 {
 	double	v_len;
 
-	v_len = sqrt(v_square(v));
+	v_len = sqrtf(v_dot(v, v));
 	if (v_len == 0)
 		v_len = 0.000001;
-	return (v_scale(v, 1 / v_len));
+	return (v_scale(MULT, v, 1 / v_len));
 }
 
-t_coords	v_scale(t_coords v, double scale)
+t_coords	v_scale(t_scale mode, t_coords v, double scale)
 {
-	return ((t_coords){scale * v.x, scale * v.y, scale * v.z});
+	if (mode == MULT)
+		return ((t_coords){v.x * scale, v.y * scale, v.z * scale});
+	return ((t_coords){v.x / scale, v.y / scale, v.z / scale});
 }
 
 double	v_dot(t_coords v, t_coords u)

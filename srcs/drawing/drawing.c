@@ -23,8 +23,6 @@ static int	_get_ray_color(t_data *data, t_ray *ray)
 	ambient = color_scale(data->ambient.color.hex, data->ambient.intensity);
 	color = color_product(ray->color.hex, ambient);
 	shadow = check_shadow(data, ray);
-	// if (ray->color.r == 1)
-	// 	printf("shadow : %d\n add_light : %d\n", shadow, add_light(data, ray));
 	color = color_add(color, shadow * add_light(data, ray));
 	return (color);
 }
