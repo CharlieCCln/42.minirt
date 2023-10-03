@@ -6,7 +6,7 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 18:55:16 by colas             #+#    #+#             */
-/*   Updated: 2023/09/21 18:12:20 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/10/03 14:18:19 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@
 
 static int	_check_nearest_plane_hit(t_ray *ray, t_object *plane, \
 	double hit_dist)
-{
+{	
+	double	dir_len;
+
 	if (ray->dist > hit_dist && hit_dist > EPSILON)
 	{
 		ray->dist = hit_dist;
 		ray->hit = get_hit_point(ray);
-		if (v_dot(ray->dir, plane->dir) > 0)
-			plane->dir = v_scale(MULT, plane->dir, -1);
+		dir_len = v_dist((t_coords){0, 0, 0}, plane->dir);
+		plane->dir = v_scale(DIV, plane->dir, dir_len);
 		ray->hit_norm = plane->dir;
 		ray->color = plane->color;
 		return (1);
@@ -48,12 +50,17 @@ static int	_get_plane_hit(t_ray *ray, t_object *plane, double *hit_dist)
 {
 	double	dot;
 
-	dot = v_dot(v_norm(ray->dir), plane->dir);
-	if (!dot)
+	dot = v_dot(ray->dir, plane->dir);
+/* 	if (!dot)
 		return (0);
 	*hit_dist = v_dot(v_oper(SUB, plane->origin, ray->origin), \
-		plane->dir) / dot;
-	return (1);
+		plane->dir) / dot; */
+	if (fabs(dot) > 0)
+	{
+		*hit_dist = v_dot(v_oper(SUB, plane->origin, ray->origin), plane->dir) / dot;
+		return (1);
+	}
+	return (0);
 }
 
 /*
