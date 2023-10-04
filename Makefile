@@ -46,7 +46,7 @@ SRC			=	main.c \
 				parsing/utils/parse_color.c \
 				parsing/utils/parse_coords.c \
 				parsing/utils/parse_filename.c \
-				parsing/utils/remove_endl.c \
+				parsing/utils/str_utils.c \
 				drawing/camera.c \
 				drawing/color_utils.c \
 				drawing/cylinder.c \

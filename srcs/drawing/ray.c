@@ -29,7 +29,7 @@ t_coords	get_hit_point(t_ray *ray)
 	the function returns 0.
 */
 
-int	find_intersect(t_data *data, t_ray *ray, int mode)
+int	find_intersect(t_data *data, t_ray *ray)
 {
 	int	i;
 	int	ret;
@@ -40,9 +40,9 @@ int	find_intersect(t_data *data, t_ray *ray, int mode)
 	while (i < data->obj_nbr + 1)
 	{
 		if (data->objects[i].type == SPHERE)
-			ret += intersect_sphere(ray, &data->objects[i], mode);
+			ret += intersect_sphere(ray, &data->objects[i]);
 		else if (data->objects[i].type == PLANE)
-			ret += intersect_plane(ray, &data->objects[i], mode);
+			ret += intersect_plane(ray, &data->objects[i]);
 		else
 			ret += intersect_cylinder(ray, &data->objects[i]);
 		i++;

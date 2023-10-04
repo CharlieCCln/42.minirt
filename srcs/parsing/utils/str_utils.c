@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   remove_endl.c                                      :+:      :+:    :+:   */
+/*   str_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccrottie <ccrottie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/03 14:50:48 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/08/03 14:50:56 by ccrottie         ###   ########.fr       */
+/*   Created: 2023/10/04 18:03:00 by ccrottie          #+#    #+#             */
+/*   Updated: 2023/10/04 18:03:01 by ccrottie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,3 +22,17 @@ char	*remove_endl(char *line)
 	line[i] = 0;
 	return (line);
 }
+
+void	replace_tabs_with_spaces(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\t')
+			line[i] = ' ';
+		i++;
+	}
+}
+

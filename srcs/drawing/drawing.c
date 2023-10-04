@@ -18,7 +18,7 @@ static int	_get_ray_color(t_data *data, t_ray *ray)
 	int		color;
 	int		shadow;
 
-	if (!find_intersect(data, ray, 0))
+	if (!find_intersect(data, ray))
 		return (0);
 	ambient = color_scale(data->ambient.color.hex, data->ambient.intensity);
 	color = color_product(ray->color.hex, ambient);

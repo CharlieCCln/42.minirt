@@ -170,16 +170,16 @@ int			check_shadow(t_data *data, t_ray *ray);
 void		pixel_put(t_mlx *mlx, int x, int y, int color);
 
 // drawing/plane.c
-int			intersect_plane(t_ray *ray, t_object *plane, int mode);
+int			intersect_plane(t_ray *ray, t_object *plane);
 
 // drawing/ray.c
-int			find_intersect(t_data *data, t_ray *ray, int mode);
+int			find_intersect(t_data *data, t_ray *ray);
 t_ray		create_ray(t_cam cam, double x, double y);
 int			get_ray_color(t_data *data, t_ray *ray);
 t_coords	get_hit_point(t_ray *ray);
 
 // drawing/sphere.c
-int			intersect_sphere(t_ray *ray, t_object *sphere, int mode);
+int			intersect_sphere(t_ray *ray, t_object *sphere);
 
 // drawing/vectors.c
 t_coords	v_norm(t_coords v);
@@ -239,8 +239,9 @@ int			parse_vector(t_coords *vector, char *content);
 // parsing/utils/parse_filename.c
 void		parse_filename(t_data *data, char *filename);
 
-// parsing/utils/remove_endl.c
+// parsing/utils/str_utils.c
 char		*remove_endl(char *line);
+void		replace_tabs_with_spaces(char *line);
 
 // ----- MEMORY -----
 

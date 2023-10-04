@@ -60,6 +60,7 @@ void	check_elements(t_data *data, char *filename)
 		line = gnl_safe(data, data->fd);
 		if (!line)
 			break ;
+		replace_tabs_with_spaces(line);
 		content = ft_split(remove_endl(line), ' ');
 		free(line);
 		if (!content)

@@ -51,16 +51,11 @@ static int	_get_plane_hit(t_ray *ray, t_object *plane, double *hit_dist)
 	double	dot;
 
 	dot = v_dot(ray->dir, plane->dir);
-/* 	if (!dot)
+	if (!dot)
 		return (0);
 	*hit_dist = v_dot(v_oper(SUB, plane->origin, ray->origin), \
-		plane->dir) / dot; */
-	if (fabs(dot) > 0)
-	{
-		*hit_dist = v_dot(v_oper(SUB, plane->origin, ray->origin), plane->dir) / dot;
-		return (1);
-	}
-	return (0);
+		plane->dir) / dot;
+	return (1);
 }
 
 /*
@@ -68,11 +63,10 @@ static int	_get_plane_hit(t_ray *ray, t_object *plane, double *hit_dist)
 	hits the plane and checks which object is the closest if there are multiple.
 */
 
-int	intersect_plane(t_ray *ray, t_object *plane, int mode)
+int	intersect_plane(t_ray *ray, t_object *plane)
 {
 	double		hit_dist;
 
-	(void)mode;
 	hit_dist = 0;
 	if (!_get_plane_hit(ray, plane, &hit_dist))
 		return (0);
