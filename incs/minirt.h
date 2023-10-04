@@ -154,7 +154,7 @@ int			color_product(int color1, int color2);
 int			intersect_cylinder(t_ray *ray, t_object *cylinder);
 
 // drawing/cylinder_caps.c
-double 		get_caps_hit(t_ray *ray, t_object *cyl);
+double		get_caps_hit(t_ray *ray, t_object *cyl);
 
 // drawing/cylinder_side.c
 double		get_side_hit(t_ray *ray, t_object *cyl);

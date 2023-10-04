@@ -22,14 +22,15 @@
 	previously used for rendering objects.
 */
 
-int check_shadow(t_data *data, t_ray *ray)
+int	check_shadow(t_data *data, t_ray *ray)
 {
-    t_ray	shadow;
+	t_ray	shadow;
 
-	shadow.origin = v_oper(ADD, data->light.origin, v_scale(MULT, ray->hit_norm, EPSILON));
+	shadow.origin = data->light.origin;
 	shadow.dir = v_norm(v_oper(SUB, ray->hit, shadow.origin));
 	find_intersect(data, &shadow);
-	if (v_dist(data->light.origin, ray->hit) < shadow.dist)
+	if (v_dist(data->light.origin, ray->hit) <= shadow.dist || \
+		fabs(v_dist(data->light.origin, ray->hit) - shadow.dist) < EPSILON)
 		return (1);
 	return (0);
 }
@@ -55,7 +56,6 @@ int	add_light(t_data *data, t_ray *ray)
 	double		r2;
 	double		light_bright;
 
-	
 	light_normal = v_oper(SUB, data->light.origin, ray->hit);
 	r2 = v_dot(light_normal, light_normal);
 	gain = v_dot(v_norm(light_normal), ray->hit_norm);

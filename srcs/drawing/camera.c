@@ -21,7 +21,8 @@
 static void	_get_low_left_corner_pos(t_cam *cam, t_coords z_axis)
 {
 	cam->ll_corner = v_oper(SUB, cam->origin, v_scale(MULT, cam->hor_fov, 0.5));
-	cam->ll_corner = v_oper(SUB, cam->ll_corner, v_scale(MULT, cam->ver_fov, 0.5));
+	cam->ll_corner = v_oper(SUB, cam->ll_corner, \
+		v_scale(MULT, cam->ver_fov, 0.5));
 	cam->ll_corner = v_oper(SUB, cam->ll_corner, z_axis);
 }
 

@@ -19,7 +19,8 @@
 	solution.
 */
 
-static void	_check_side_solutions(t_object *cyl, double solutions[2], double dist[2])
+static void	_check_side_solutions(t_object *cyl, \
+	double solutions[2], double dist[2])
 {
 	if ((dist[0] >= 0 && dist[0] <= cyl->height && solutions[0] > EPSILON) && \
 		(dist[1] >= 0 && dist[1] <= cyl->height && solutions[1] > EPSILON))

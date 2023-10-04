@@ -23,7 +23,7 @@
 
 static int	_check_nearest_plane_hit(t_ray *ray, t_object *plane, \
 	double hit_dist)
-{	
+{
 	double	dir_len;
 
 	if (ray->dist > hit_dist && hit_dist > EPSILON)
@@ -33,6 +33,8 @@ static int	_check_nearest_plane_hit(t_ray *ray, t_object *plane, \
 		dir_len = v_dist((t_coords){0, 0, 0}, plane->dir);
 		plane->dir = v_scale(DIV, plane->dir, dir_len);
 		ray->hit_norm = plane->dir;
+		if (v_dot(ray->dir, ray->hit_norm) > 0)
+			ray->hit_norm = v_scale(MULT, ray->hit_norm, -1);
 		ray->color = plane->color;
 		return (1);
 	}

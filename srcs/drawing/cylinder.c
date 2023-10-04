@@ -78,7 +78,7 @@ static int	_check_nearest_cylinder_hit(t_ray *ray, t_object *cyl, \
 
 	if (ray->dist > hit_dist && hit_dist > EPSILON)
 	{
-		dir_len = v_dist((t_coords){0,0,0}, cyl->dir);
+		dir_len = v_dist((t_coords){0, 0, 0}, cyl->dir);
 		cyl->dir = v_scale(DIV, cyl->dir, dir_len);
 		ray->dist = hit_dist;
 		ray->hit = get_hit_point(ray);

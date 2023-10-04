@@ -35,4 +35,3 @@ void	replace_tabs_with_spaces(char *line)
 		i++;
 	}
 }
-

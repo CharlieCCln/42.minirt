@@ -69,7 +69,7 @@ static double	_caps_equation(t_ray *ray, t_coords origin, t_coords cyl_dir)
 	exist any, are then checked to know which one to use and display.
 */
 
-double get_caps_hit(t_ray *ray, t_object *cyl)
+double	get_caps_hit(t_ray *ray, t_object *cyl)
 {
 	t_coords	cyl_top;
 	t_coords	dist[2];

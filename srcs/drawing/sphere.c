@@ -22,7 +22,7 @@
 
 static int	_check_nearest_sphere_hit(t_ray *ray, t_object *sphere, \
 	double hit_dist)
-{	
+{
 	if (ray->dist > hit_dist && hit_dist > EPSILON)
 	{
 		ray->dist = hit_dist;
@@ -49,7 +49,7 @@ static int	_check_nearest_sphere_hit(t_ray *ray, t_object *sphere, \
 */
 
 static int	_sphere_equation(t_ray *ray, t_object *sphere, \
-	t_coords dist, double *hit_dist)
+	t_coords sp2ray, double *hit_dist)
 {
 	double	a;
 	double	b;
@@ -58,8 +58,8 @@ static int	_sphere_equation(t_ray *ray, t_object *sphere, \
 	double	is_inside;
 
 	a = v_dot(ray->dir, ray->dir);
-	b = 2 * v_dot(ray->dir, dist);
-	c = v_dot(dist, dist) - \
+	b = 2 * v_dot(ray->dir, sp2ray);
+	c = v_dot(sp2ray, sp2ray) - \
 		((sphere->diameter / 2) * (sphere->diameter / 2));
 	delta = (b * b) - (4 * a * c);
 	if (delta < 0)
@@ -80,12 +80,12 @@ static int	_sphere_equation(t_ray *ray, t_object *sphere, \
 
 int	intersect_sphere(t_ray *ray, t_object *sphere)
 {
-	t_coords	dist;
+	t_coords	sp2ray;
 	double		hit_dist;
 
 	hit_dist = 0;
-	dist = v_oper(SUB, ray->origin, sphere->origin);
-	if (!_sphere_equation(ray, sphere, dist, &hit_dist))
+	sp2ray = v_oper(SUB, ray->origin, sphere->origin);
+	if (!_sphere_equation(ray, sphere, sp2ray, &hit_dist))
 		return (0);
 	return (_check_nearest_sphere_hit(ray, sphere, hit_dist));
 }
