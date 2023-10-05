@@ -6,7 +6,7 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 11:51:23 by cgelin            #+#    #+#             */
-/*   Updated: 2023/10/03 10:35:29 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/10/05 14:26:44 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	add_light(t_data *data, t_ray *ray)
 	if (gain <= 0)
 		light_bright = 0;
 	else
-		light_bright = (data->light.intensity * gain * 500) / (4.0 * M_PI * r2);
+		light_bright = (data->light.intensity * gain * 300) / (4.0 * M_PI * r2);
 	return (color_product(color_add(10, \
 		color_scale(ray->color.hex, light_bright)), 0xFFFFFF));
 }

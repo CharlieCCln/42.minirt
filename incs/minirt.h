@@ -6,7 +6,7 @@
 /*   By: cgelin <cgelin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 14:40:10 by ccrottie          #+#    #+#             */
-/*   Updated: 2023/09/26 18:41:05 by cgelin           ###   ########.fr       */
+/*   Updated: 2023/10/05 11:12:27 by cgelin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # include "float.h"
 
 # define KEY_ESC 65307
-# define WIDTH 1280
-# define HEIGHT 720
+# define WIDTH 1920
+# define HEIGHT 1080
 # define X 0
 # define Y 1
 # define Z 2
